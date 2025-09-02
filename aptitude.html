@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CareerCompass</title>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="nav.css">
+  <link rel="stylesheet" href="footer.css">
+  <link rel="stylesheet" href="test.css">
+</head>
+<body>
+
+<!-- ✅ Navbar -->
+<nav>
+  <!-- Logo & Brand -->
+  <div class="brand">
+    <img src="logo.png" alt="Logo" />
+    CareerCompass
+  </div>
+
+  <!-- Desktop Navigation Links -->
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="search_college.html">College Search</a>
+    <a href="guide.html">Career Guide</a>
+    <a href="aptitude.html">Aptitude</a>
+    <a href="Dashboard.html">Dashboard</a>
+  </div>
+
+  <!-- 🔹 Auth Buttons (Desktop)--> 
+  <div class="nav-buttons" id="auth-buttons">
+    <button class="login-btn" onclick="window.location.href='login.html'">Login</button>
+    <button class="signup-btn" onclick="window.location.href='login.html'">Sign Up</button>
+  </div>
+
+  <!-- 🔹 User Icon + Popup (Desktop) -->
+  <div class="user-menu hidden" id="user-menu">
+    <img src="user-icon.png" class="user-icon" id="userIcon" />
+    <div class="user-popup" id="userPopup">
+      <p><strong id="userName">Username</strong></p>
+      <p id="userEmail">email@example.com</p>
+      <button id="logoutBtn">Logout</button>
+    </div>
+  </div>
+
+  <!-- Hamburger Icon -->
+  <button class="hamburger" onclick="toggleMobileMenu()" id="hamburgerBtn">☰</button>
+
+  <!-- 🔹 Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="search_college.html">College Search</a>
+    <a href="guide.html">Career Guide</a>
+    <a href="aptitude.html">Aptitude</a>
+    <a href="Dashboard.html">Dashboard</a>
+
+    <!-- 🔹 Auth Buttons (Mobile)--> 
+    <div class="nav-buttons" id="auth-buttons-mobile">
+      <button onclick="window.location.href='login.html'">Login</button>
+      <button onclick="window.location.href='login.html'">Sign Up</button>
+    </div>
+
+    <!-- 🔹 User Icon + Popup (Mobile) -->
+    <div class="user-menu hidden" id="user-menu-mobile">
+      <img src="user-icon.png" class="user-icon" id="userIconMobile" />
+      <div class="user-popup" id="userPopupMobile">
+        <p><strong id="userNameMobile">Username</strong></p>
+        <p id="userEmailMobile">email@example.com</p>
+        <button id="logoutBtnMobile">Logout</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ✅ Background Grid Animation -->
+<div class="grid-background">
+  <script>
+    for (let i = 0; i < 300; i++) {
+      document.write('<div class="tile"></div>');
+    }
+  </script>
+</div>
+
+
+
+
+
+<!-- ================= Aptitude Test Section ================= -->
+<div class="aptitude-test-section">
+  <div class="test-container">
+    <div class="test-header">
+      <h1>Aptitude Test</h1>
+      <div class="totalquestion">
+  Total Questions – 60 <br>(Verbal – 20, Quantitative – 20, General Knowledge – 20)
+</div>
+
+      <p>"Challenge yourself, know your potential!"</p>
+    </div>
+
+    <div class="user-info">
+      <p><strong>User:</strong> <span id="userNameTest">User</span> | 
+         <strong>Email:</strong> <span id="userEmailTest">email@example.com</span>
+      </p>
+    </div>
+
+    <div class="timer" id="timer">Time Remaining: 20:00</div>
+
+    <form id="aptitudeForm"></form>
+
+    <div class="nav-buttonss">
+      <button type="button" class="btn btn-secondary" id="prevBtn">Previous</button>
+      <button type="button" class="btn btn-primary" id="nextBtn">Next</button>
+    </div>
+
+    <div class="score-card" id="scoreCard">
+      <h4>Test Completed!</h4>
+      <p>Your Score: <span id="scorePercent"></span>%</p>
+      <button class="btn btn-warning btn-test-again" onclick="location.reload()">Test Again</button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<!-- ✅ Footer -->
+<footer class="footer">
+  <div class="footer-container">
+
+    <!-- Logo Column -->
+    <div class="footer-col footer-logo">
+      <img src="logo.png" alt="Career Compass Logo" />
+      <p><i class="fas fa-map-marker-alt"></i>123 Future Street,<br> Maharashtra, India</p>
+      <p><i class="fas fa-envelope"></i> contact@careercompass.in</p>
+      <p><i class="fas fa-phone"></i> +91-9876543210</p>
+    </div>
+
+    <!-- Explore Column -->
+    <div class="footer-col">
+      <h3>Explore</h3>
+      <ul>
+        <li><i class="fas fa-compass"></i><a href="#">Aptitude Test</a></li>
+        <li><i class="fas fa-university"></i><a href="#">College Reviews</a></li>
+        <li><i class="fas fa-briefcase"></i><a href="#">Job Updates</a></li>
+        <li><i class="fas fa-book"></i><a href="#">Courses</a></li>
+        <li><i class="fas fa-envelope-open-text"></i><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+
+    <!-- Services Column -->
+    <div class="footer-col">
+      <h3>Services</h3>
+      <ul>
+        <li><i class="fas fa-chart-line"></i><a href="#">Career Planning</a></li>
+        <li><i class="fas fa-lightbulb"></i><a href="#">Skill Assessment</a></li>
+        <li><i class="fas fa-users"></i><a href="#">Mentor Support</a></li>
+        <li><i class="fas fa-laptop-code"></i><a href="#">Tech Training</a></li>
+        <li><i class="fas fa-globe"></i><a href="#">Global Resources</a></li>
+      </ul>
+    </div>
+
+    <!-- Social Media Column -->
+    <div class="footer-col">
+      <h3>Follow Us</h3>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Bottom -->
+  <div class="footer-bottom">
+    <p>© 2025 Career Compass. All rights reserved.</p>
+    <div class="footer-quote">
+      “Career Compass isn’t just a tool — it’s your partner in building a future that fits.”
+    </div>
+  </div>
+</footer>
+
+
+<script src="nav.js"></script>
+
+
+
+
+<script type="module">
+  // ================= Firebase Imports =================
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+  // ================= Firebase Config =================
+  const firebaseConfig = {
+    apiKey: "AIzaSyD2fZbAKmL1Cti7NIDcadAh4WqVv5KzbPI",
+    authDomain: "career-guidance-e1462.firebaseapp.com",
+    projectId: "career-guidance-e1462",
+    storageBucket: "career-guidance-e1462.appspot.com",
+    messagingSenderId: "566009292247",
+    appId: "1:566009292247:web:67720ba8c8030ef7f95792",
+    measurementId: "G-4TWBG640XT"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // ================= Navbar & User Menu =================
+  const authButtons = document.getElementById('auth-buttons');
+  const userMenu = document.getElementById('user-menu');
+  const userEmailNav = document.getElementById('userEmail');
+  const userNameNav = document.getElementById('userName');
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  const authButtonsMobile = document.getElementById('auth-buttons-mobile');
+  const userMenuMobile = document.getElementById('user-menu-mobile');
+  const userEmailMobile = document.getElementById('userEmailMobile');
+  const userNameMobile = document.getElementById('userNameMobile');
+  const logoutBtnMobile = document.getElementById('logoutBtnMobile');
+
+  let currentUser = null;
+
+  onAuthStateChanged(auth, (user) => {
+    currentUser = user;
+
+    // Navbar User Info
+    if(user){
+      authButtons.style.display = 'none';
+      userMenu.classList.remove('hidden');
+      userEmailNav.textContent = user.email;
+      userNameNav.textContent = user.displayName || "User";
+
+      authButtonsMobile.style.display = 'none';
+      userMenuMobile.classList.remove('hidden');
+      userEmailMobile.textContent = user.email;
+      userNameMobile.textContent = user.displayName || "User";
+    } else {
+      authButtons.style.display = 'flex';
+      userMenu.classList.add('hidden');
+      authButtonsMobile.style.display = 'flex';
+      userMenuMobile.classList.add('hidden');
+    }
+
+    // Test Section User Info
+    const userNameTest = document.getElementById('userNameTest');
+    const userEmailTest = document.getElementById('userEmailTest');
+    if(userNameTest) userNameTest.textContent = user?.displayName || "Guest";
+    if(userEmailTest) userEmailTest.textContent = user?.email || "Not logged in";
+  });
+
+  logoutBtn.addEventListener('click', () => signOut(auth).then(() => location.reload()));
+  logoutBtnMobile.addEventListener('click', () => signOut(auth).then(() => location.reload()));
+
+  // ================= Test Variables =================
+  const form = document.getElementById("aptitudeForm");
+  const timerEl = document.getElementById("timer");
+  let currentQuestion = 0;
+  let answers = [];
+  let totalTime = 20 * 60; // 20 minutes
+  let timerInterval;
+
+  // ================= Sample Questions =================
+  const questions = [
+     // ===== Verbal (20) =====
+      { section: "Verbal", q: "“Loquacious” means:", options: ["Silent","Talkative","Shy","Angry"], answer: 1 },
+      { section: "Verbal", q: "Antonym of “Inadvertent”:", options: ["Intentional","Accidental","Careless","Random"], answer: 0 },
+      { section: "Verbal", q: "The scientist’s explanation was so ___ that even laymen could understand it.", options: ["Lucid","Obscure","Vague","Confusing"], answer: 0 },
+      { section: "Verbal", q: "Idiom: “Throw caution to the wind” means:", options: ["Be careful","Take risks","Ignore","Run away"], answer: 1 },
+      { section: "Verbal", q: "Synonym of “Ephemeral”:", options: ["Eternal","Temporary","Permanent","Infinite"], answer: 1 },
+      { section: "Verbal", q: "He has a ___ for solving puzzles.", options: ["Penchant","Aversion","Dislike","Fear"], answer: 0 },
+      { section: "Verbal", q: "“Ubiquitous” means:", options: ["Rare","Everywhere","Hidden","Limited"], answer: 1 },
+      { section: "Verbal", q: "Antonym of “Altruistic”:", options: ["Selfish","Generous","Kind","Benevolent"], answer: 0 },
+      { section: "Verbal", q: "The manager spoke in a ___ tone to motivate the team.", options: ["Harsh","Encouraging","Indifferent","Monotonous"], answer: 1 },
+      { section: "Verbal", q: "“Burn the midnight oil” means:", options: ["Sleep late","Work late","Light a lamp","Relax"], answer: 1 },
+      { section: "Verbal", q: "Synonym of “Cacophony”:", options: ["Harmony","Noise","Silence","Melody"], answer: 1 },
+      { section: "Verbal", q: "The politician’s speech was full of ___ and promises.", options: ["Vagueness","Clarity","Certainty","Honesty"], answer: 0 },
+      { section: "Verbal", q: "Antonym of “Benevolent”:", options: ["Kind","Malevolent","Generous","Compassionate"], answer: 1 },
+      { section: "Verbal", q: "His argument was ___ and convincing.", options: ["Fallacious","Cogent","Weak","Illogical"], answer: 1 },
+      { section: "Verbal", q: "“A blessing in disguise” means:", options: ["Something good at first glance","Something bad that turns good","Hidden curse","Clear misfortune"], answer: 1 },
+      { section: "Verbal", q: "Synonym of “Obfuscate”:", options: ["Clarify","Confuse","Simplify","Enlighten"], answer: 1 },
+      { section: "Verbal", q: "The student answered ___ questions in the exam.", options: ["Ambiguously","Accurately","Incorrectly","Hastily"], answer: 1 },
+      { section: "Verbal", q: "Antonym of “Prolific”:", options: ["Productive","Unproductive","Creative","Abundant"], answer: 1 },
+      { section: "Verbal", q: "“Beat around the bush” means:", options: ["Avoid the main topic","Direct approach","Gardening","Speak clearly"], answer: 0 },
+      { section: "Verbal", q: "Synonym of “Sagacious”:", options: ["Wise","Foolish","Reckless","Ignorant"], answer: 0 },
+
+      // ===== Quantitative (20) =====
+      { section: "Quantitative", q: "Sum of three consecutive odd numbers is 75, the largest is:", options: ["23","25","27","29"], answer: 1 },
+      { section: "Quantitative", q: "120 km at 60 km/h takes how long?", options: ["1 hr","2 hr","3 hr","4 hr"], answer: 1 },
+      { section: "Quantitative", q: "2,6,12,20,30,… Next?", options: ["40","42","45","50"], answer: 1 },
+      { section: "Quantitative", q: "Ratio 3:5, total 64. First number?", options: ["24","40","32","28"], answer: 0 },
+      { section: "Quantitative", q: "If 15% of a number is 60, number = ?", options: ["300","250","200","400"], answer: 0 },
+      { section: "Quantitative", q: "Find x: 2x + 7 = 19", options: ["6","5","7","4"], answer: 0 },
+      { section: "Quantitative", q: "Avg of 2,4,6,8,x is 6. x = ?", options: ["10","12","8","6"], answer: 0 },
+      { section: "Quantitative", q: "(3/4) ÷ (2/5) = ?", options: ["15/8","8/15","7/10","5/8"], answer: 0 },
+      { section: "Quantitative", q: "SI of 1000 at 5% for 2 years?", options: ["100","200","50","150"], answer: 1 },
+      { section: "Quantitative", q: "3^4 × 3^2 = ?", options: ["3^6","3^8","3^2","3^7"], answer: 1 },
+      { section: "Quantitative", q: "50% of 80% of 200 = ?", options: ["80","60","90","100"], answer: 0 },
+      { section: "Quantitative", q: "Perimeter of square = 64. Side = ?", options: ["16","32","64","16"], answer: 0 },
+      { section: "Quantitative", q: "Next: 5,10,20,40,…", options: ["60","80","100","70"], answer: 1 },
+      { section: "Quantitative", q: "Bag: 3R,2B,5G. P(Red)=?", options: ["1/5","3/10","2/5","1/2"], answer: 1 },
+      { section: "Quantitative", q: "Solve: 5x - 7 = 18", options: ["3","4","5","6"], answer: 2 },
+      { section: "Quantitative", q: "LCM(12,18)=?", options: ["36","54","72","32"], answer: 0 },
+      { section: "Quantitative", q: "If 2 pencils cost ₹8, 5 cost?", options: ["₹15","₹20","₹18","₹25"], answer: 1 },
+      { section: "Quantitative", q: "Area of triangle (b=10,h=8)=?", options: ["40","50","80","60"], answer: 0 },
+      { section: "Quantitative", q: "7 + 3 × 2 = ?", options: ["13","20","17","10"], answer: 0 },
+      { section: "Quantitative", q: "Next: 1,4,9,16,…", options: ["25","20","30","36"], answer: 0 },
+
+      // ===== General Knowledge (20) =====
+      { section: "General Knowledge", q: "Highest electronegativity?", options: ["Oxygen","Fluorine","Nitrogen","Chlorine"], answer: 1 },
+      { section: "General Knowledge", q: "Great Wall of China purpose?", options: ["Trade","Protect from invaders","Religion","Farming"], answer: 1 },
+      { section: "General Knowledge", q: "Theory of relativity by?", options: ["Newton","Einstein","Galileo","Tesla"], answer: 1 },
+      { section: "General Knowledge", q: "Capital of Australia?", options: ["Sydney","Melbourne","Canberra","Brisbane"], answer: 2 },
+      { section: "General Knowledge", q: "Largest planet?", options: ["Earth","Jupiter","Saturn","Mars"], answer: 1 },
+      { section: "General Knowledge", q: "SI unit of force?", options: ["Joule","Newton","Watt","Pascal"], answer: 1 },
+      { section: "General Knowledge", q: "First Prime Minister of India?", options: ["Nehru","Gandhi","Patel","Ambedkar"], answer: 0 },
+      { section: "General Knowledge", q: "Water freezes at?", options: ["0°C","100°C","32°C","-1°C"], answer: 0 },
+      { section: "General Knowledge", q: "Symbol of Gold?", options: ["Ag","Au","Gd","Go"], answer: 1 },
+      { section: "General Knowledge", q: "Speed of light ≈ ?", options: ["3×10^8 m/s","3×10^6","3×10^7","3×10^9"], answer: 0 },
+      { section: "General Knowledge", q: "Author of “Harry Potter”?", options: ["Tolkien","J.K. Rowling","Lewis","Suzanne Collins"], answer: 1 },
+      { section: "General Knowledge", q: "First man on Moon?", options: ["Buzz Aldrin","Neil Armstrong","Yuri Gagarin","Michael Collins"], answer: 1 },
+      { section: "General Knowledge", q: "Currency of Japan?", options: ["Yen","Dollar","Euro","Peso"], answer: 0 },
+      { section: "General Knowledge", q: "Longest river?", options: ["Nile","Amazon","Ganges","Yangtze"], answer: 0 },
+      { section: "General Knowledge", q: "Who painted Mona Lisa?", options: ["Van Gogh","Da Vinci","Picasso","Rembrandt"], answer: 1 },
+      { section: "General Knowledge", q: "Nucleus consists of?", options: ["Protons+Neutrons","Protons+Electrons","Neutrons only","Electrons only"], answer: 0 },
+      { section: "General Knowledge", q: "Fastest land animal?", options: ["Lion","Cheetah","Tiger","Leopard"], answer: 1 },
+      { section: "General Knowledge", q: "Smallest prime number?", options: ["0","1","2","3"], answer: 2 },
+      { section: "General Knowledge", q: "H2O is?", options: ["Oxygen","Hydrogen","Water","Salt"], answer: 2 },
+      { section: "General Knowledge", q: "Distance light travels in 1 year?", options: ["Light-year","Kilometer","Mile","Parsec"], answer: 0 }
+  ];
+
+  // ================= Render Questions =================
+  function renderQuestions() {
+    form.innerHTML = "";
+    questions.forEach((q, idx) => {
+      const card = document.createElement("div");
+      card.classList.add("question-card");
+      if(idx===0) card.classList.add("active");
+
+      let sectionColor = "#007bff";
+      if(q.section==="Verbal") sectionColor="#6f42c1";
+      else if(q.section==="Quantitative") sectionColor="#28a745";
+      else if(q.section==="General Knowledge") sectionColor="#fd7e14";
+
+      card.innerHTML = `
+        <h6 class="section-name" style="background:${sectionColor};">${q.section}</h6>
+        <h5>Q${idx+1}: ${q.q}</h5>
+        <div class="options">
+          ${q.options.map((opt,i)=>`
+            <input type="radio" name="q${idx}" id="q${idx}_opt${i}" value="${i}" ${answers[idx]==i?'checked':''}>
+            <label for="q${idx}_opt${i}">${opt}</label>
+          `).join('')}
+        </div>
+      `;
+      form.appendChild(card);
+    });
+  }
+
+  function showQuestion(index){
+    document.querySelectorAll(".question-card").forEach((c,i)=>c.classList.toggle("active", i===index));
+    const navBtns = document.querySelector(".nav-buttonss");
+    if(navBtns) navBtns.style.display = "flex";
+    document.getElementById("prevBtn").style.display = index===0 ? "none":"inline-block";
+    document.getElementById("nextBtn").textContent = index===questions.length-1 ? "Submit":"Next";
+  }
+
+  function saveAnswer(){
+    const selected = document.querySelector(`input[name="q${currentQuestion}"]:checked`);
+    answers[currentQuestion] = selected ? parseInt(selected.value,10):null;
+  }
+
+  // ================= Timer =================
+  function startTimer(){
+    clearInterval(timerInterval);
+    timerInterval = setInterval(()=>{
+      const min = Math.floor(totalTime/60);
+      const sec = totalTime%60;
+      timerEl.textContent = `Time Remaining: ${min.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`;
+      if(totalTime<=0){
+        clearInterval(timerInterval);
+        submitTest();
+      }
+      totalTime--;
+    },1000);
+  }
+
+  // ================= Section Scores =================
+  function getSectionScores(userAnswers){
+    const sectionScores={Verbal:0, Quantitative:0, "General Knowledge":0};
+    const sectionTotals={Verbal:0, Quantitative:0, "General Knowledge":0};
+    userAnswers.forEach((ans, idx)=>{
+      const sec = questions[idx].section;
+      sectionTotals[sec]++;
+      if(ans===questions[idx].answer) sectionScores[sec]++;
+    });
+    return {sectionScores, sectionTotals};
+  }
+
+  function displaySectionScores(userAnswers){
+    const {sectionScores, sectionTotals} = getSectionScores(userAnswers);
+    const scoreCard = document.getElementById("scoreCard");
+    scoreCard.innerHTML += `
+      <div style="margin-top:20px; text-align:left;">
+        <p>Verbal: ${sectionScores.Verbal}/${sectionTotals.Verbal} (${((sectionScores.Verbal/sectionTotals.Verbal)*100).toFixed(0)}%)</p>
+        <p>Quantitative: ${sectionScores.Quantitative}/${sectionTotals.Quantitative} (${((sectionScores.Quantitative/sectionTotals.Quantitative)*100).toFixed(0)}%)</p>
+        <p>General Knowledge: ${sectionScores["General Knowledge"]}/${sectionTotals["General Knowledge"]} (${((sectionScores["General Knowledge"]/sectionTotals["General Knowledge"])*100).toFixed(0)}%)</p>
+      </div>
+    `;
+  }
+
+  // ================= Submit Test =================
+  async function submitTest(){
+    saveAnswer();
+
+    let totalCorrect = 0;
+    answers.forEach((a,i)=>{ if(a===questions[i].answer) totalCorrect++; });
+    const percentDisplay = ((totalCorrect/questions.length)*100).toFixed(2);
+
+    document.getElementById("scorePercent").textContent = percentDisplay;
+    document.getElementById("scoreCard").style.display = "block";
+    form.style.display = "none";
+
+    // Hide buttons after submit
+    const navBtns = document.querySelector(".nav-buttonss");
+    if(navBtns) navBtns.style.display = "none";
+
+    clearInterval(timerInterval);
+
+    // Save to Firestore
+    if(currentUser){
+      const {sectionScores} = getSectionScores(answers);
+      const verbal = sectionScores.Verbal || 0;
+      const quant  = sectionScores.Quantitative || 0;
+      const reasoning = sectionScores["General Knowledge"] || 0;
+      const total = verbal + reasoning + quant;
+      const percentage = Math.round((total/questions.length)*100);
+
+      try{
+        await addDoc(collection(db,"aptitudeResults"),{
+          userId: currentUser.uid,
+          email: currentUser.email,
+          scores:{verbal, reasoning, quant},
+          total,
+          percentage,
+          timestamp: serverTimestamp(),
+          answers
+        });
+      } catch(e){
+        console.error("Save failed:", e);
+      }
+    } else alert("You must be logged in to save your result.");
+
+    displaySectionScores(answers);
+  }
+
+  // ================= Reset Test =================
+  function resetTest(){
+    answers=[]; currentQuestion=0; totalTime=20*60;
+    renderQuestions();
+    showQuestion(currentQuestion);
+    form.style.display="block";
+
+    const navBtns = document.querySelector(".nav-buttonss");
+    if(navBtns) navBtns.style.display="flex";
+
+    const scoreCard = document.getElementById("scoreCard");
+    scoreCard.style.display = "none";
+    scoreCard.innerHTML = `
+      <h4>Test Completed!</h4>
+      <p>Your Score: <span id="scorePercent"></span>%</p>
+      <button class="btn btn-warning btn-test-again" id="testAgainBtn">Test Again</button>
+    `;
+    startTimer();
+    document.getElementById("testAgainBtn").addEventListener("click", resetTest);
+  }
+
+  // ================= Events =================
+  document.getElementById("nextBtn").addEventListener("click", ()=>{
+    saveAnswer();
+    if(currentQuestion<questions.length-1){
+      currentQuestion++;
+      showQuestion(currentQuestion);
+    } else submitTest();
+  });
+
+  document.getElementById("prevBtn").addEventListener("click", ()=>{
+    saveAnswer();
+    if(currentQuestion>0){
+      currentQuestion--;
+      showQuestion(currentQuestion);
+    }
+  });
+
+  // ================= Init =================
+  renderQuestions();
+  showQuestion(currentQuestion);
+  startTimer();
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Login – Career Compass</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right,#005bea, #03313e);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .login-box {
+      background-color: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 400px;
+    }
+    .login-title {
+      font-weight: bold;
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #003973;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-box">
+    <div class="login-title">Admin Login – Career Compass</div>
+    <form id="loginForm">
+      <div class="mb-3">
+        <label for="email" class="form-label">Email address</label>
+        <input type="email" class="form-control" id="email" placeholder="careercompass@gmail.com" required>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" placeholder="••••••" required>
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Login</button>
+      <div id="error" class="text-danger mt-2 text-center"></div>
+    </form>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyD2fZbAKmL1Cti7NIDcadAh4WqVv5KzbPI",
+      authDomain: "career-guidance-e1462.firebaseapp.com",
+      projectId: "career-guidance-e1462",
+      storageBucket: "career-guidance-e1462.appspot.com",
+      messagingSenderId: "566009292247",
+      appId: "1:566009292247:web:67720ba8c8030ef7f95792",
+      measurementId: "G-4TWBG640XT"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    const allowedAdminEmail = "careercompass@gmail.com"; // ✅ your admin email
+
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+
+          // ✅ Restrict to admin only
+          if (user.email === allowedAdminEmail) {
+            window.location.href = "Admin.html";
+          } else {
+            document.getElementById("error").innerText = "Access Denied: You are not an admin.";
+            auth.signOut();
+          }
+        })
+        .catch((error) => {
+          document.getElementById("error").innerText = "Login failed: " + error.message;
+        });
+    });
+  </script>
+</body>
+</html>

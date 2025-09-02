@@ -1,0 +1,202 @@
+/* 🌟 Review Section Container */
+#reviewSection {
+  padding: 40px 20px;
+  text-align: center;
+  border-top: 2px solid #ddd;
+  background: #0b0f1a9f; /* Dark background */
+  color: white;
+}
+
+/* 🌟 Container */
+.review-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Heading */
+.review-container h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+/* User Greeting */
+.user-greeting {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+/* Rating Input */
+.rating-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+/* Stars */
+.stars {
+  display: flex;
+  direction: rtl;
+  gap: 5px;
+}
+
+.stars input {
+  display: none;
+}
+
+.stars label {
+  font-size: 2rem;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.stars input:checked ~ label,
+.stars label:hover,
+.stars label:hover ~ label {
+  color: #ffc107;
+}
+
+/* Textarea */
+textarea#reviewText {
+  width: 100%;
+  padding: 10px;
+  height: 100px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  resize: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #1a1e2a;
+  color: white;
+}
+
+/* Submit Button */
+button#submitReview {
+  background: #007bff;
+  font-weight: bold;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+   transition: all 0.4s ease;
+  
+}
+
+button#submitReview:hover {
+  background: #0056b3;
+  letter-spacing: 2px;
+    
+}
+
+/* Average Rating */
+.average-rating {
+  margin: 20px 0 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Rating Graph */
+.rating-graph {
+  margin: 10px 0 30px;
+  text-align: left;
+}
+
+.rating-graph .bar {
+  display: flex;
+  align-items: center;
+  margin: 4px 0;
+}
+
+.rating-graph .bar-label {
+  width: 60px;
+}
+
+.rating-graph .bar-fill {
+  height: 16px;
+  background: #ffc107;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+
+/* 🌟 Horizontal Scroll Review List */
+.review-list {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 20px;
+  padding: 20px 0;
+  scroll-snap-type: x mandatory;
+}
+
+/* 🌟 Review Item Card */
+.review-item {
+  flex: 0 0 auto;
+  width: 250px;
+  background: #ffffff41;
+  color: white;
+  border-radius: 10px;
+  padding: 15px;
+  scroll-snap-align: start;
+  box-shadow: 0 4px 8px rgb(0, 0, 0);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: auto;
+  min-height: 150px;
+  overflow: hidden;
+}
+
+.review-item:hover {
+  transform: scale(1.05);
+}
+
+/* Name in Review */
+.review-item .name {
+  font-weight: bold;
+  color: #ffc107;
+  margin-bottom: 8px;
+}
+
+/* Review Text Scrollable */
+.review-item .text {
+  color: #ddd;
+  word-wrap: break-word;
+  white-space: normal;
+  overflow-y: auto; /* ✅ Enable vertical scroll */
+  max-height: 80px; /* ✅ Fixed scroll area height */
+  padding-right: 5px;
+}
+
+/* Inner scrollbar styling for text */
+.review-item .text::-webkit-scrollbar {
+  width: 6px;
+}
+
+.review-item .text::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.review-item .text::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Smooth Horizontal Scrollbar */
+.review-list::-webkit-scrollbar {
+  height: 8px;
+}
+
+.review-list::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 10px;
+}
+
+.review-list::-webkit-scrollbar-track {
+  background: transparent;
+}

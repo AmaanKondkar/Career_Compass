@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CareerCompass</title>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="nav.css">
+  <link rel="stylesheet" href="footer.css">
+  <link rel="stylesheet" href="dashboard.css">
+  <style>
+   
+
+
+/* === Pro-Level Glassmorphic Score Card === */
+/* ===== Main Card Styles ===== */
+.score-card {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+  padding: 30px;
+  background: rgba(15, 15, 31, 0.465);
+  /*backdrop-filter: blur(15px);*/
+  border-radius: 25px;
+  box-shadow: 0 15px 50px rgba(0, 255, 234, 0.3), 0 0 20px rgba(0,0,0,0.5);
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+/* ===== Circular Score Styles ===== */
+.score-circle-card {
+  background: rgba(26, 26, 46, 0.9);
+  border-radius: 25px;
+  padding: 25px 20px 30px 20px;
+  text-align: center;
+  width: 240px;
+  box-shadow: 0 0 25px rgba(0, 255, 234, 0.4), inset 0 0 10px rgba(0,255,234,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.score-circle-card:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 35px rgba(0, 255, 234, 0.7), inset 0 0 15px rgba(0,255,234,0.2);
+}
+
+.circle-wrap {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 20px auto;
+}
+.circle-wrap svg {
+  transform: rotate(-90deg);
+  width: 150px;
+  height: 150px;
+}
+circle.bg {
+  fill: none;
+  stroke: #2a2a3d;
+  stroke-width: 14;
+}
+circle.progress {
+  fill: none;
+  stroke: url(#grad1);
+  stroke-width: 14;
+  stroke-linecap: round;
+  stroke-dasharray: 377;
+  stroke-dashoffset: 377;
+  transition: stroke-dashoffset 1s ease, stroke 1s ease;
+}
+.circle-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 28px;
+  font-weight: 700;
+  color: #00ffe0;
+  text-shadow: 0 0 10px #00ffe0, 0 0 20px #4e9cff;
+}
+
+/* ===== Section Scores Styles ===== */
+.section-scores {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 400px;
+}
+.section {
+  background: rgba(26,26,46,0.85);
+  border-radius: 20px;
+  padding: 18px 22px;
+  box-shadow: 0 0 20px rgba(78,156,255,0.25), inset 0 0 5px rgba(78,156,255,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.section:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 25px rgba(78,156,255,0.5), inset 0 0 10px rgba(78,156,255,0.15);
+}
+.progress-container {
+  background: #2a2a3d;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 18px;
+  margin: 12px 0;
+  box-shadow: inset 0 0 5px rgba(0,0,0,0.4);
+}
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #4e9cff, #00ffe0, #4e9cff);
+  border-radius: 12px;
+  transition: width 0.7s ease, background 1s ease;
+  box-shadow: 0 0 8px #00ffe0;
+}
+.progress-label {
+  font-size: 14px;
+  color: #ccc;
+  text-align: right;
+  font-weight: 500;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px){
+  .score-card {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    padding: 20px;
+  }
+  .score-circle-card {
+    width: 220px;
+  }
+  .circle-wrap {
+    width: 130px;
+    height: 130px;
+  }
+  .circle-text {
+    font-size: 24px;
+  }
+  .section-scores {
+    max-width: 100%;
+  }
+}
+
+
+
+
+
+  
+  </style>
+</head>
+<body>
+
+<!-- 🌟 Navbar -->
+<nav>
+  <!-- Logo & Brand -->
+  <div class="brand">
+    <img src="logo.png" alt="Logo" />
+    CareerCompass
+  </div>
+  <!-- Desktop Navigation Links -->
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="search_college.html">College Search</a>
+    <a href="guide.html">Career Guide</a>
+    <a href="aptitude.html">Aptitude</a>
+    <a href="Dashboard.html">Dashboard</a>
+  </div>
+  <!-- 🔹 Auth Buttons (Desktop) -->
+  <div class="nav-buttons" id="auth-buttons">
+    <button class="login-btn" onclick="window.location.href='login.html'">Login</button>
+    <button class="signup-btn" onclick="window.location.href='login.html'">Sign Up</button>
+  </div>
+  <!-- 🔹 User Icon + Popup (Desktop) -->
+  <div class="user-menu hidden" id="user-menu">
+    <img src="user-icon.png" class="user-icon" id="userIcon" />
+    <div class="user-popup" id="userPopup">
+      <p><strong id="userName">Username</strong></p>
+      <p id="userEmail">email@example.com</p>
+      <button id="logoutBtn">Logout</button>
+    </div>
+  </div>
+  <!-- Hamburger Icon -->
+  <button class="hamburger" onclick="toggleMobileMenu()" id="hamburgerBtn">☰</button>
+  <!-- 🔹 Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="search_college.html">College Search</a>
+    <a href="guide.html">Career Guide</a>
+    <a href="aptitude.html">Aptitude</a>
+    <a href="Dashboard.html">Dashboard</a>
+    <!-- 🔹 Auth Buttons (Mobile) -->
+    <div class="nav-buttons" id="auth-buttons-mobile">
+      <button onclick="window.location.href='login.html'">Login</button>
+      <button onclick="window.location.href='login.html'">Sign Up</button>
+    </div>
+    <!-- 🔹 User Icon + Popup (Mobile) -->
+    <div class="user-menu hidden" id="user-menu-mobile">
+      <img src="user-icon.png" class="user-icon" id="userIconMobile" />
+      <div class="user-popup" id="userPopupMobile">
+        <p><strong id="userNameMobile">Username</strong></p>
+        <p id="userEmailMobile">email@example.com</p>
+        <button id="logoutBtnMobile">Logout</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- 🌟 Background Grid Animation -->
+<div class="grid-background"></div>
+
+<!-- ✅ Dashboard Form (unchanged UI) -->
+<div class="dashboard-container">
+  <h2>User Dashboard</h2>
+  <form id="dashboardForm">
+    <!-- Personal Details -->
+    <div class="form-section">
+      <h5>1) Personal Details</h5>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label>Full Name</label>
+          <input type="text" class="form-control" id="fullName" required>
+        </div>
+        <div class="col-md-6">
+          <label>Date of Birth</label>
+          <input type="date" class="form-control" id="dob" required>
+        </div>
+        <div class="col-md-6">
+          <label>Gender</label>
+          <select class="form-control" id="gender">
+            <option value="">Select</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <label>Contact Number</label>
+          <input type="tel" class="form-control" id="contact" required>
+        </div>
+        <div class="col-md-12">
+          <label>Email</label>
+          <input type="email" class="form-control" id="email" disabled>
+        </div>
+      </div>
+    </div>
+
+    <!-- Academic Info -->
+    <div class="form-section">
+      <h5>2) Academic Information</h5>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label>Current Qualification</label>
+          <input type="text" class="form-control" id="qualification">
+        </div>
+        <div class="col-md-6">
+          <label>Stream / Specialization</label>
+          <input type="text" class="form-control" id="stream">
+        </div>
+        <div class="col-md-6">
+          <label>Year of Passing</label>
+          <input type="number" class="form-control" id="yearOfPassing">
+        </div>
+        <div class="col-md-6">
+          <label>Marks / CGPA / Grade</label>
+          <input type="text" class="form-control" id="marks">
+        </div>
+      </div>
+    </div>
+
+    <!-- Career Interests -->
+    <div class="form-section">
+      <h5>3) Career Interests</h5>
+      <div class="mb-3">
+        <label>Interested Courses</label>
+        <textarea class="form-control" id="courses" rows="2" placeholder="Example: Engineering, MBA, IT, Design"></textarea>
+      </div>
+      <div class="mb-3">
+        <label>Preferred Study Level</label>
+        <select class="form-control" id="studyLevel">
+          <option value="">Select</option>
+          <option>Higher Secondary</option>
+          <option>Senior Secondary</option>
+          <option>UG</option>
+          <option>PG</option>
+          <option>Diploma</option>
+          <option>Certification</option>
+          <option>Degree</option>
+          <option>Part-Time</option>
+          <option>Full-Time</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label>Preferred Country/Location</label>
+        <select class="form-control" id="location">
+          <option value="">Select</option>
+          <option>India</option>
+          <option>Abroad</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label>Looking for</label>
+        <select class="form-control" id="lookingFor">
+          <option value="">Select</option>
+          <option>Admissions</option>
+          <option>Career Guidance</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="btn-group-custom">
+      <button type="submit" class="btn btn-success" id="submitBtn">Submit</button>
+      <button type="button" class="btn btn-primary d-none" id="editBtn">Edit</button>
+      <button type="button" class="btn btn-warning d-none" id="updateBtn">Update</button>
+    </div>
+  </form>
+</div>
+
+<!-- 📊 Merged Aptitude Score Card (from second.html) -->
+<!-- 📊 Colorful Animated Aptitude Score Card -->
+<!-- ===== Aptitude Score Card ===== -->
+<div class="score-card">
+  <!-- Circular Score -->
+  <div class="score-circle-card">
+    <h3>Total Score</h3>
+    <div class="circle-wrap">
+      <svg>
+        <defs>
+          <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#4e9cff"/>
+            <stop offset="50%" stop-color="#00ffe0"/>
+            <stop offset="100%" stop-color="#4e9cff"/>
+          </linearGradient>
+        </defs>
+        <circle class="bg" r="60" cx="70" cy="70"/>
+        <circle class="progress" id="progressCircle" r="60" cx="70" cy="70"/>
+      </svg>
+      <div class="circle-text" id="scoreText">0%</div>
+    </div>
+    <div id="scoreTimestamp" class="score-timestamp">Last Updated: --</div>
+  </div>
+
+  <!-- Section Scores -->
+  <div class="section-scores">
+    <div class="section">
+      <h4><i class="fas fa-book-reader"></i> Verbal</h4>
+      <div class="progress-container">
+        <div class="progress-bar" id="verbalBar"></div>
+      </div>
+      <div class="progress-label" id="verbalLabel">0/20 (0%)</div>
+    </div>
+    <div class="section">
+      <h4><i class="fas fa-calculator"></i> Quant</h4>
+      <div class="progress-container">
+        <div class="progress-bar" id="quantBar"></div>
+      </div>
+      <div class="progress-label" id="quantLabel">0/20 (0%)</div>
+    </div>
+    <div class="section">
+      <h4><i class="fas fa-globe"></i> GK</h4>
+      <div class="progress-container">
+        <div class="progress-bar" id="gkBar"></div>
+      </div>
+      <div class="progress-label" id="gkLabel">0/20 (0%)</div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- Footer Start -->
+<footer class="footer">
+  <div class="footer-container">
+    <!-- Logo Column -->
+    <div class="footer-col footer-logo">
+      <img src="logo.png" alt="Career Compass Logo" />
+      <p><i class="fas fa-map-marker-alt"></i>123 Future Street,<br> Maharashtra, India</p>
+      <p><i class="fas fa-envelope"></i> contact@careercompass.in</p>
+      <p><i class="fas fa-phone"></i> +91-9876543210</p>
+    </div>
+    <!-- Explore Column -->
+    <div class="footer-col">
+      <h3>Explore</h3>
+      <ul>
+        <li><i class="fas fa-compass"></i><a href="#">Aptitude Test</a></li>
+        <li><i class="fas fa-university"></i><a href="#">College Reviews</a></li>
+        <li><i class="fas fa-briefcase"></i><a href="#">Job Updates</a></li>
+        <li><i class="fas fa-book"></i><a href="#">Courses</a></li>
+        <li><i class="fas fa-envelope-open-text"></i><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+    <!-- Services Column -->
+    <div class="footer-col">
+      <h3>Services</h3>
+      <ul>
+        <li><i class="fas fa-chart-line"></i><a href="#">Career Planning</a></li>
+        <li><i class="fas fa-lightbulb"></i><a href="#">Skill Assessment</a></li>
+        <li><i class="fas fa-users"></i><a href="#">Mentor Support</a></li>
+        <li><i class="fas fa-laptop-code"></i><a href="#">Tech Training</a></li>
+        <li><i class="fas fa-globe"></i><a href="#">Global Resources</a></li>
+      </ul>
+    </div>
+    <!-- Social Media Column -->
+    <div class="footer-col">
+      <h3>Follow Us</h3>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Career Compass. All rights reserved.</p>
+    <div class="footer-quote">
+      “Career Compass isn’t just a tool — it’s your partner in building a future that fits.”
+    </div>
+  </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc, updateDoc, collection, query, where, orderBy, limit, onSnapshot } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+// ===== Firebase Config =====
+const firebaseConfig = {
+  apiKey: "AIzaSyD2fZbAKmL1Cti7NIDcadAh4WqVv5KzbPI",
+  authDomain: "career-guidance-e1462.firebaseapp.com",
+  projectId: "career-guidance-e1462",
+  storageBucket: "career-guidance-e1462.appspot.com",
+  messagingSenderId: "566009292247",
+  appId: "1:566009292247:web:67720ba8c8030ef7f95792",
+  measurementId: "G-4TWBG640XT"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+setPersistence(auth, browserLocalPersistence);
+const db = getFirestore(app);
+
+// ===== Navbar =====
+const authButtons = document.getElementById('auth-buttons');
+const userMenu = document.getElementById('user-menu');
+const userEmailEl = document.getElementById('userEmail');
+const userNameEl = document.getElementById('userName');
+const logoutBtn = document.getElementById('logoutBtn');
+
+const authButtonsMobile = document.getElementById('auth-buttons-mobile');
+const userMenuMobile = document.getElementById('user-menu-mobile');
+const userEmailMobileEl = document.getElementById('userEmailMobile');
+const userNameMobileEl = document.getElementById('userNameMobile');
+const logoutBtnMobile = document.getElementById('logoutBtnMobile');
+
+// ===== Dashboard Form =====
+const form = document.getElementById("dashboardForm");
+const submitBtn = document.getElementById("submitBtn");
+const editBtn = document.getElementById("editBtn");
+const updateBtn = document.getElementById("updateBtn");
+const fields = form ? form.querySelectorAll("input, select, textarea") : [];
+
+function setFieldsDisabled(disabled){ fields.forEach(el => el.disabled = disabled); }
+function clearForm(){ if(!form) return; form.reset(); document.getElementById("email").value = ""; }
+function setEmailValue(value){ const emailEl = document.getElementById("email"); if(emailEl) emailEl.value = value || ""; }
+
+function setMode(mode){
+  if(!form) return;
+  submitBtn?.classList.add("d-none");
+  editBtn?.classList.add("d-none");
+  updateBtn?.classList.add("d-none");
+  if(mode==="view"){ setFieldsDisabled(true); editBtn?.classList.remove("d-none"); }
+  else if(mode==="create"){ setFieldsDisabled(false); document.getElementById("email").disabled=true; submitBtn?.classList.remove("d-none"); }
+  else if(mode==="edit"){ setFieldsDisabled(false); document.getElementById("email").disabled=true; updateBtn?.classList.remove("d-none"); }
+  else if(mode==="loggedOut"){ clearForm(); setFieldsDisabled(true); submitBtn?.classList.remove("d-none"); resetScoreCard(); }
+}
+
+async function loadData(){
+  const email = localStorage.getItem("userEmail");
+  if(!email || !form) return;
+  const snap = await getDoc(doc(db,"students",email));
+  if(snap.exists()){
+    const data = snap.data();
+    document.getElementById("fullName").value = data.fullName||"";
+    document.getElementById("dob").value = data.dob||"";
+    document.getElementById("gender").value = data.gender||"";
+    document.getElementById("contact").value = data.contact||"";
+    document.getElementById("email").value = data.email||"";
+    document.getElementById("qualification").value = data.qualification||"";
+    document.getElementById("stream").value = data.stream||"";
+    document.getElementById("yearOfPassing").value = data.yearOfPassing||"";
+    document.getElementById("marks").value = data.marks||"";
+    document.getElementById("courses").value = data.courses||"";
+    document.getElementById("studyLevel").value = data.studyLevel||"";
+    document.getElementById("location").value = data.location||"";
+    document.getElementById("lookingFor").value = data.lookingFor||"";
+    setMode("view");
+  } else { setEmailValue(email); setMode("create"); }
+}
+
+function getFormData(){
+  return {
+    fullName: document.getElementById("fullName").value,
+    dob: document.getElementById("dob").value,
+    gender: document.getElementById("gender").value,
+    contact: document.getElementById("contact").value,
+    email: document.getElementById("email").value,
+    qualification: document.getElementById("qualification").value,
+    stream: document.getElementById("stream").value,
+    yearOfPassing: document.getElementById("yearOfPassing").value,
+    marks: document.getElementById("marks").value,
+    courses: document.getElementById("courses").value,
+    studyLevel: document.getElementById("studyLevel").value,
+    location: document.getElementById("location").value,
+    lookingFor: document.getElementById("lookingFor").value
+  };
+}
+
+form?.addEventListener("submit", async e=>{
+  e.preventDefault();
+  const data = getFormData();
+  if(!data.email){ alert("Please login first."); return; }
+  await setDoc(doc(db,"students",data.email),data);
+  localStorage.setItem("userEmail",data.email);
+  setMode("view"); alert("Information saved successfully!");
+});
+
+editBtn?.addEventListener("click", ()=>setMode("edit"));
+updateBtn?.addEventListener("click", async ()=>{
+  const data = getFormData();
+  if(!data.email){ alert("Please login first."); return; }
+  await updateDoc(doc(db,"students",data.email),data);
+  setMode("view"); alert("Information updated successfully!");
+});
+
+// ===== Aptitude Score Listener =====
+let aptitudeUnsub = null;
+
+function animateScoreCircle(score){
+  const circle = document.getElementById('progressCircle');
+  const text = document.getElementById('scoreText');
+  if(!circle || !text) return;
+  const radius = circle.r.baseVal.value;
+  const circumference = 2 * Math.PI * radius;
+  circle.style.strokeDasharray = `${circumference} ${circumference}`;
+  circle.style.strokeDashoffset = circumference;
+
+  let current = 0;
+  clearInterval(window._circleAnim);
+  window._circleAnim = setInterval(()=>{
+    current++;
+    if(current>score){ clearInterval(window._circleAnim); current=score; }
+    circle.style.strokeDashoffset = circumference - (current/100)*circumference;
+    text.textContent = current + "%";
+  },15);
+}
+
+function loadAptitudeScore() {
+  const user = auth.currentUser;
+  if(!user) return;
+
+  const resultsRef = collection(db,"aptitudeResults");
+  const qLatest = query(resultsRef,where("userId","==",user.uid),orderBy("timestamp","desc"),limit(1));
+
+  if(aptitudeUnsub) aptitudeUnsub();
+  aptitudeUnsub = onSnapshot(qLatest, snap=>{
+    if(snap.empty) { resetScoreCard(); return; }
+
+    const data = snap.docs[0].data()||{};
+    const scores = data.scores||{};
+    animateScoreCircle(Math.round(data.percentage||0));
+
+    const sectionContainer = document.querySelector(".section-scores");
+    if(!sectionContainer) return;
+    sectionContainer.innerHTML = "";
+
+    Object.keys(scores).forEach(key=>{
+      const scoreValue = scores[key]||0;
+      const maxScore = 20;
+      const percent = Math.round((scoreValue/maxScore)*100);
+
+      const sectionDiv = document.createElement("div");
+      sectionDiv.classList.add("section");
+
+      let iconClass = "fas fa-star";
+      if(key.toLowerCase().includes("verbal")) iconClass = "fas fa-book-reader";
+      else if(key.toLowerCase().includes("quant")) iconClass = "fas fa-calculator";
+      else if(key.toLowerCase().includes("gk")) iconClass = "fas fa-globe";
+
+      sectionDiv.innerHTML = `
+        <h4><i class="${iconClass}"></i> ${key.charAt(0).toUpperCase()+key.slice(1)}</h4>
+        <div class="progress-container">
+          <div class="progress-bar" style="width:0%;"></div>
+        </div>
+        <div class="progress-label">0/${maxScore} (0%)</div>
+      `;
+      sectionContainer.appendChild(sectionDiv);
+
+      const bar = sectionDiv.querySelector(".progress-bar");
+      const label = sectionDiv.querySelector(".progress-label");
+      let current = 0;
+      const interval = setInterval(()=>{
+        current++;
+        if(current>percent){ current=percent; clearInterval(interval); }
+        bar.style.width = current+"%";
+        label.textContent = `${Math.round(current/100*maxScore)}/${maxScore} (${current}%)`;
+      },15);
+    });
+
+    const tsEl = document.getElementById("scoreTimestamp");
+    if(data.timestamp?.toDate)
+      tsEl.textContent = "Last Updated: "+data.timestamp.toDate().toLocaleString('en-IN',{timeZone:'Asia/Kolkata'});
+  });
+}
+
+function resetScoreCard(){
+  animateScoreCircle(0);
+  const sectionContainer = document.querySelector(".section-scores");
+  if(!sectionContainer) return;
+  sectionContainer.innerHTML = `
+    <div class="section">
+      <h4><i class="fas fa-book-reader"></i> Verbal</h4>
+      <div class="progress-container"><div class="progress-bar" style="width:0%;"></div></div>
+      <div class="progress-label">0/20 (0%)</div>
+    </div>
+    <div class="section">
+      <h4><i class="fas fa-calculator"></i> Quant</h4>
+      <div class="progress-container"><div class="progress-bar" style="width:0%;"></div></div>
+      <div class="progress-label">0/20 (0%)</div>
+    </div>
+    <div class="section">
+      <h4><i class="fas fa-globe"></i> GK</h4>
+      <div class="progress-container"><div class="progress-bar" style="width:0%;"></div></div>
+      <div class="progress-label">0/20 (0%)</div>
+    </div>
+  `;
+  document.getElementById("scoreTimestamp").textContent = "Last Updated: --";
+}
+
+// ===== Auth State =====
+onAuthStateChanged(auth,user=>{
+  if(user){
+    authButtons.style.display='none'; userMenu.classList.remove('hidden');
+    userEmailEl.textContent = user.email; userNameEl.textContent = user.displayName||"User";
+    authButtonsMobile.style.display='none'; userMenuMobile.classList.remove('hidden');
+    userEmailMobileEl.textContent = user.email; userNameMobileEl.textContent = user.displayName||"User";
+    localStorage.setItem("userEmail",user.email); setEmailValue(user.email);
+    loadData(); loadAptitudeScore();
+  } else {
+    authButtons.style.display='flex'; userMenu.classList.add('hidden');
+    authButtonsMobile.style.display='flex'; userMenuMobile.classList.add('hidden');
+    localStorage.removeItem("userEmail"); setMode("loggedOut");
+    if(aptitudeUnsub) aptitudeUnsub();
+    resetScoreCard();
+  }
+});
+
+// ===== Logout =====
+logoutBtn?.addEventListener('click',async()=>{
+  if(aptitudeUnsub) aptitudeUnsub(); resetScoreCard(); await signOut(auth);
+});
+logoutBtnMobile?.addEventListener('click',async()=>{
+  if(aptitudeUnsub) aptitudeUnsub(); resetScoreCard(); await signOut(auth);
+});
+
+// ===== Background Grid Animation =====
+const gridBackground = document.querySelector('.grid-background');
+if(gridBackground){
+  for(let i=0;i<300;i++){
+    const tile = document.createElement('div');
+    tile.classList.add('tile');
+    gridBackground.appendChild(tile);
+  }
+}
+</script>
+
+
+
+
+
+
+
+<script src="nav.js"></script>
+
+</body>
+</html>

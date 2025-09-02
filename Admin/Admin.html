@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Career Compass Admin Panel</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+  body { 
+    margin: 0; 
+    font-family: 'Segoe UI', sans-serif; 
+    background: #f0f2f5; 
+  }
+  .admin-wrapper { 
+    display: flex; 
+    min-height: 100vh; 
+  }
+
+  /* Sidebar */
+  .sidebar {
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    height: 100vh; 
+    width: 250px;
+    background: #1a1a2e; 
+    color: white; 
+    display: flex; 
+    flex-direction: column;
+    padding: 20px; 
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+  .sidebar-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .sidebar-brand img {
+    width: 150px;
+    height: auto;
+    display: block;
+  }
+  .sidebar-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+  }
+  .sidebar h4 { 
+    font-size: 1.1rem; 
+    text-align: center; 
+    margin-bottom: 30px; 
+  }
+  .sidebar button { 
+    margin-top: auto; 
+  }
+
+  /* Main Content */
+  .main-content { 
+    flex: 1; 
+    padding: 30px; 
+    overflow-y: auto; 
+    margin-left: 250px; 
+  }
+
+  /* Form Cards */
+  .card { 
+    border-radius: 12px; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+  }
+  h4 { margin-top: 25px; }
+  button { width: 100%; }
+
+  /* Courses UI */
+  .course-card {
+    background: #f1f4f9; 
+    border-radius: 10px; 
+    padding: 15px; 
+    margin-bottom: 15px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+  .course-card h6 { 
+    font-weight: 600; 
+    margin-bottom: 10px; 
+  }
+  .remove-course { 
+    float: right; 
+    font-size: 14px; 
+    padding: 2px 8px; 
+  }
+
+  /* Saved Colleges - Updated Card Design */
+  .filters { 
+    display: flex; 
+    gap: 10px; 
+    flex-wrap: wrap; 
+    margin-bottom: 15px; 
+  }
+  
+  .college-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-bottom: 15px;
+  }
+  .college-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  }
+
+  .college-top-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  .college-card img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+  .college-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    flex-grow: 1;
+  }
+  .badge-type {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #fff;
+  }
+  .badge-indian { background: #1e90ff; }
+  .badge-abroad { background: #ff6347; }
+
+  .college-info-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin: 10px 0;
+  }
+  .college-card p {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 50px;
+  }
+
+  /* Action Buttons */
+  .college-actions {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    display: flex;
+    gap: 10px;
+  }
+  .college-actions button {
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .college-actions .edit-btn { background-color: #1e90ff; color: white; }
+  .college-actions .edit-btn:hover { background-color: #0c7cd5; }
+  .college-actions .delete-btn { background-color: #ff6347; color: white; }
+  .college-actions .delete-btn:hover { background-color: #e53e1d; }
+
+  @media(max-width: 768px) {
+    .college-card { width: 100%; }
+    .main-content { margin-left: 0; }
+    .sidebar { position: relative; width: 100%; height: auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="admin-wrapper">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <img src="logo.png" alt="Career Compass Logo">
+      <div class="sidebar-title">Career Compass</div>
+    </div>
+    <h4>Admin Panel</h4>
+    <button class="btn btn-danger" id="logoutBtn">Logout</button>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container-fluid">
+      <form id="collegeForm">
+        <!-- Basic Info -->
+        <div class="card mb-3">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Basic Information</h5>
+          </div>
+          <div class="card-body row g-3">
+            <div class="col-md-6">
+              <label class="form-label">College Name</label>
+              <input type="text" id="collegeName" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">State</label>
+              <input type="text" id="state" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Type</label>
+              <select id="type" class="form-select" required>
+                <option value="">Select Type</option>
+                <option value="Indian">Indian</option>
+                <option value="Abroad">Abroad</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Established Year</label>
+              <input type="number" id="establishedYear" class="form-control">
+            </div>
+            <div class="col-12">
+              <label class="form-label">Website</label>
+              <input type="url" id="website" class="form-control">
+            </div>
+            <div class="col-12">
+              <label class="form-label">Description</label>
+              <textarea id="description" rows="4" class="form-control" placeholder="Enter detailed description about the college"></textarea>
+            </div>
+
+            <!-- Stats & Accreditation -->
+            <div class="col-12">
+              <h5 class="mt-4">Stats & Accreditation</h5>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Placement Percentage</label>
+              <input type="text" id="placementPercentage" class="form-control" placeholder="e.g., 85%">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Cut-Off Scores / Ranks</label>
+              <input type="text" id="cutOffScores" class="form-control" placeholder="e.g., JEE: 150">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Accreditation / Affiliation</label>
+              <input type="text" id="accreditation" class="form-control" placeholder="e.g., NAAC A+">
+            </div>
+          </div>
+        </div>
+
+        <!-- Courses -->
+        <h4>Courses Offered</h4>
+        <div id="coursesContainer"></div>
+        <button type="button" class="btn btn-outline-primary mb-3" id="addCourse">+ Add Course</button>
+
+        <!-- Facilities -->
+        <h4>Campus & Infrastructure</h4>
+        <div class="row mb-3">
+          <div class="col-md-6"><input type="checkbox" id="hostel"> 🛌 Hostel</div>
+          <div class="col-md-6"><input type="checkbox" id="library"> 📚 Library</div>
+          <div class="col-md-6"><input type="checkbox" id="labs"> 🧪 Laboratories</div>
+          <div class="col-md-6"><input type="checkbox" id="wifi"> 🌐 Wi-Fi Campus</div>
+          <div class="col-md-6"><input type="checkbox" id="sports"> ⚽ Sports</div>
+          <div class="col-md-6"><input type="checkbox" id="canteen"> 🍽️ Canteen</div>
+          <div class="col-md-6"><input type="checkbox" id="security"> 🔐 Security</div>
+        </div>
+
+        <!-- Contact & Links -->
+        <div class="card mb-3">
+          <div class="card-header bg-success text-white">
+            <h5 class="mb-0">Contact & Links</h5>
+          </div>
+          <div class="card-body row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Phone</label>
+              <input type="text" id="phone" class="form-control" placeholder="Enter phone number">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Email</label>
+              <input type="email" id="email" class="form-control" placeholder="Enter email address">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Apply Now / Enquiry Link</label>
+              <input type="url" id="applyLink" class="form-control" placeholder="Enter URL">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Google Maps Embed Code</label>
+              <textarea id="mapEmbed" class="form-control" rows="3" placeholder="Paste iframe code"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gallery -->
+        <div class="card mb-3 mt-3">
+          <div class="card-header bg-secondary text-white">
+            <h5 class="mb-0">Gallery</h5>
+          </div>
+          <div class="card-body row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Logo (URL)</label>
+              <input type="url" id="logoUrl" class="form-control" placeholder="https://example.com/logo.jpg">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Banner (URL)</label>
+              <input type="url" id="bannerUrl" class="form-control" placeholder="https://example.com/banner.jpg">
+            </div>
+            <div class="col-12">
+              <label class="form-label">Gallery Images (URLs)</label>
+              <div id="galleryFields">
+                <div class="input-group mb-2">
+                  <input type="url" name="galleryImages[]" class="form-control" placeholder="https://example.com/photo1.jpg">
+                  <button type="button" class="btn btn-danger removeField" style="display:none;">&times;</button>
+                </div>
+              </div>
+              <button type="button" class="btn btn-outline-primary btn-sm" id="addGalleryField">+ Add More</button>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-4" id="submitBtn">Submit College Data</button>
+      </form>
+
+      <!-- Filters & Preview -->
+      <h4 class="mt-5">Saved Colleges Preview</h4>
+      <div class="filters">
+        <select id="typeFilter" class="form-select" style="width:150px;">
+          <option value="All">All Types</option>
+          <option value="Indian">Indian</option>
+          <option value="Abroad">Abroad</option>
+        </select>
+        <select id="stateFilter" class="form-select" style="width:200px;">
+          <option value="All">All States</option>
+        </select>
+      </div>
+      <div id="collegeList"></div>
+    </div>
+  </main>
+</div>
+
+
+
+
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp, onSnapshot, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyD2fZbAKmL1Cti7NIDcadAh4WqVv5KzbPI",
+  authDomain: "career-guidance-e1462.firebaseapp.com",
+  projectId: "career-guidance-e1462",
+  storageBucket: "career-guidance-e1462.appspot.com",
+  messagingSenderId: "566009292247",
+  appId: "1:566009292247:web:67720ba8c8030ef7f95792",
+  measurementId: "G-4TWBG640XT"
+};
+
+
+
+
+// ✅ Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// ✅ Auth check – redirect if not logged in or wrong user
+onAuthStateChanged(auth, (user) => {
+  const allowedAdminEmail = "careercompass@gmail.com";
+  if (!user || user.email !== allowedAdminEmail) {
+    window.location.href = "adminlogin.html";
+  }
+});
+
+
+
+
+
+
+
+
+// Logout
+document.getElementById("logoutBtn").addEventListener("click", () => {
+  sessionStorage.clear();
+  window.location.href = "adminlogin.html";
+});
+
+// Courses
+document.getElementById("addCourse").addEventListener("click", () => {
+  const index = document.querySelectorAll("#coursesContainer .course-card").length + 1;
+  const card = document.createElement("div");
+  card.classList.add("course-card");
+  card.innerHTML = `
+    <h6>Course ${index} <button type="button" class="btn btn-danger btn-sm remove-course">Remove</button></h6>
+    <div class="row g-2">
+      <div class="col-md-4"><input type="text" placeholder="Course Name" class="form-control course-name" required></div>
+      <div class="col-md-4"><input type="text" placeholder="Duration" class="form-control course-duration"></div>
+      <div class="col-md-4"><input type="text" placeholder="Eligibility" class="form-control course-eligibility"></div>
+      <div class="col-md-4"><input type="text" placeholder="Seats" class="form-control course-seats"></div>
+      <div class="col-md-4"><input type="text" placeholder="Exams Accepted" class="form-control course-exams"></div>
+      <div class="col-md-4"><input type="text" placeholder="Fees" class="form-control course-fees"></div>
+    </div>
+  `;
+  card.querySelector(".remove-course").addEventListener("click", () => card.remove());
+  document.getElementById("coursesContainer").appendChild(card);
+});
+
+// Gallery Fields
+document.getElementById("addGalleryField").addEventListener("click", () => {
+  const wrapper = document.createElement("div");
+  wrapper.classList.add("input-group", "mb-2");
+  wrapper.innerHTML = `<input type="url" name="galleryImages[]" class="form-control" placeholder="https://example.com/photo.jpg">
+                       <button type="button" class="btn btn-danger removeField">&times;</button>`;
+  document.getElementById("galleryFields").appendChild(wrapper);
+});
+document.getElementById("galleryFields").addEventListener("click", e => {
+  if (e.target.classList.contains("removeField")) e.target.parentElement.remove();
+});
+
+// Submit College Form
+const submitBtn = document.getElementById("submitBtn");
+submitBtn.dataset.editingId = "";
+
+document.getElementById("collegeForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  submitBtn.disabled = true;
+  submitBtn.textContent = submitBtn.dataset.editingId ? "Updating..." : "Submitting...";
+
+  const courses = Array.from(document.querySelectorAll("#coursesContainer .course-card")).map(row => ({
+    name: row.querySelector(".course-name").value.trim(),
+    duration: row.querySelector(".course-duration").value.trim(),
+    eligibility: row.querySelector(".course-eligibility").value.trim(),
+    seats: row.querySelector(".course-seats").value.trim(),
+    exams: row.querySelector(".course-exams").value.trim(),
+    fees: row.querySelector(".course-fees").value.trim()
+  }));
+  const galleryImages = Array.from(document.querySelectorAll('input[name="galleryImages[]"]'))
+    .map(i=>i.value.trim()).filter(v=>v);
+
+  // Stats & Accreditation
+  const statsAcc = {
+    placementPercentage: document.getElementById("placementPercentage").value.trim(),
+    cutOffScores: document.getElementById("cutOffScores").value.trim(),
+    accreditation: document.getElementById("accreditation").value.trim()
+  };
+
+  // Contact & Links
+  const contact = {
+    phone: document.getElementById("phone").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    applyLink: document.getElementById("applyLink").value.trim(),
+    mapEmbed: document.getElementById("mapEmbed").value.trim()
+  };
+
+  const collegeData = {
+    collegeName: document.getElementById("collegeName").value.trim(),
+    state: document.getElementById("state").value.trim(),
+    type: document.getElementById("type").value,
+    establishedYear: document.getElementById("establishedYear").value.trim(),
+    website: document.getElementById("website").value.trim(),
+    description: document.getElementById("description").value.trim(),
+    logoUrl: document.getElementById("logoUrl").value.trim(),
+    bannerUrl: document.getElementById("bannerUrl").value.trim(),
+    galleryImages,
+    courses,
+    facilities: {
+      hostel: document.getElementById("hostel").checked,
+      library: document.getElementById("library").checked,
+      labs: document.getElementById("labs").checked,
+      wifi: document.getElementById("wifi").checked,
+      sports: document.getElementById("sports").checked,
+      canteen: document.getElementById("canteen").checked,
+      security: document.getElementById("security").checked
+    },
+    statsAcc,
+    contact,
+    updatedAt: serverTimestamp()
+  };
+
+  try {
+    if(submitBtn.dataset.editingId){
+      await updateDoc(doc(db,"collegeList",submitBtn.dataset.editingId), collegeData);
+      alert("✅ College updated successfully!");
+      submitBtn.dataset.editingId = "";
+      submitBtn.textContent = "Submit College Data";
+    } else {
+      await addDoc(collection(db,"collegeList"),{ ...collegeData, createdAt: serverTimestamp() });
+      alert("✅ College added successfully!");
+    }
+    e.target.reset();
+    document.getElementById("coursesContainer").innerHTML = "";
+    document.getElementById("galleryFields").innerHTML = `<div class="input-group mb-2">
+      <input type="url" name="galleryImages[]" class="form-control" placeholder="https://example.com/photo1.jpg">
+      <button type="button" class="btn btn-danger removeField" style="display:none;">&times;</button></div>`;
+  } catch(err){ console.error(err); alert("❌ Failed to save data."); }
+
+  submitBtn.disabled = false;
+  submitBtn.textContent = "Submit College Data";
+});
+
+// Filters
+const typeFilter = document.getElementById("typeFilter");
+const stateFilter = document.getElementById("stateFilter");
+
+// Render Colleges
+let snapshotData = [];
+function renderColleges(data){
+  const typeVal = typeFilter.value;
+  const stateVal = stateFilter.value;
+  const list = document.getElementById("collegeList");
+  list.innerHTML = "";
+
+  const filtered = data.filter(c => 
+    (typeVal === "All" || c.type === typeVal) &&
+    (stateVal === "All" || c.state === stateVal)
+  );
+
+  filtered.forEach(d => {
+    const div = document.createElement("div");
+    div.classList.add("college-card");
+    const badgeClass = d.type === "Indian" ? "badge-indian" : "badge-abroad";
+    
+    div.innerHTML = `
+      <div class="college-top-row">
+        <img src="${d.logoUrl || 'https://via.placeholder.com/150'}" alt="Logo">
+        <div class="college-title">${d.collegeName}</div>
+        <div class="badge-type ${badgeClass}">${d.type || '-'}</div>
+      </div>
+      <div class="college-info-row">
+        <span>State: ${d.state || '-'}</span>
+        <span>Established: ${d.establishedYear || '-'}</span>
+      </div>
+      <p>${d.description || ''}</p>
+      <div><strong>Placement:</strong> ${d.statsAcc?.placementPercentage || '-'} | 
+      <strong>Cut-Off:</strong> ${d.statsAcc?.cutOffScores || '-'} | 
+      <strong>Accreditation:</strong> ${d.statsAcc?.accreditation || '-'}</div>
+      <div><strong>Phone:</strong> ${d.contact?.phone || '-'} | 
+      <strong>Email:</strong> ${d.contact?.email || '-'}</div>
+      <div><a href="${d.contact?.applyLink || '#'}" target="_blank">Apply Now</a></div>
+      ${d.contact?.mapEmbed ? `<div class="map-embed">${d.contact.mapEmbed}</div>` : ''}
+    `;
+
+    // Action Buttons
+    const actions = document.createElement("div");
+    actions.classList.add("college-actions");
+    actions.innerHTML = `<button class="edit-btn">Edit</button><button class="delete-btn">Delete</button>`;
+    div.appendChild(actions);
+
+    // Delete
+    actions.querySelector(".delete-btn").addEventListener("click", async ()=> {
+      if(confirm("Are you sure to delete this college?")){
+        await deleteDoc(doc(db,"collegeList",d.id));
+      }
+    });
+
+    // Edit
+    actions.querySelector(".edit-btn").addEventListener("click", ()=>{
+      submitBtn.dataset.editingId = d.id;
+      document.getElementById("collegeName").value = d.collegeName || "";
+      document.getElementById("state").value = d.state || "";
+      document.getElementById("type").value = d.type || "";
+      document.getElementById("establishedYear").value = d.establishedYear || "";
+      document.getElementById("website").value = d.website || "";
+      document.getElementById("description").value = d.description || "";
+      document.getElementById("logoUrl").value = d.logoUrl || "";
+      document.getElementById("bannerUrl").value = d.bannerUrl || "";
+      
+      // Courses
+      document.getElementById("coursesContainer").innerHTML = "";
+      (d.courses || []).forEach((c,i)=>{
+        const card = document.createElement("div"); card.classList.add("course-card");
+        card.innerHTML = `
+          <h6>Course ${i+1} <button type="button" class="btn btn-danger btn-sm remove-course">Remove</button></h6>
+          <div class="row g-2">
+            <div class="col-md-4"><input type="text" class="form-control course-name" value="${c.name || ''}" required></div>
+            <div class="col-md-4"><input type="text" class="form-control course-duration" value="${c.duration || ''}"></div>
+            <div class="col-md-4"><input type="text" class="form-control course-eligibility" value="${c.eligibility || ''}"></div>
+            <div class="col-md-4"><input type="text" class="form-control course-seats" value="${c.seats || ''}"></div>
+            <div class="col-md-4"><input type="text" class="form-control course-exams" value="${c.exams || ''}"></div>
+            <div class="col-md-4"><input type="text" class="form-control course-fees" value="${c.fees || ''}"></div>
+          </div>
+        `;
+        card.querySelector(".remove-course").addEventListener("click", ()=>card.remove());
+        document.getElementById("coursesContainer").appendChild(card);
+      });
+
+      // Gallery
+      document.getElementById("galleryFields").innerHTML = "";
+      (d.galleryImages||[]).forEach(url=>{
+        const wrapper = document.createElement("div"); wrapper.classList.add("input-group","mb-2");
+        wrapper.innerHTML = `<input type="url" name="galleryImages[]" class="form-control" value="${url}">
+                             <button type="button" class="btn btn-danger removeField">&times;</button>`;
+        wrapper.querySelector(".removeField").addEventListener("click", ()=>wrapper.remove());
+        document.getElementById("galleryFields").appendChild(wrapper);
+      });
+
+      // Stats & Accreditation
+      document.getElementById("placementPercentage").value = d.statsAcc?.placementPercentage || "";
+      document.getElementById("cutOffScores").value = d.statsAcc?.cutOffScores || "";
+      document.getElementById("accreditation").value = d.statsAcc?.accreditation || "";
+
+      // Contact
+      document.getElementById("phone").value = d.contact?.phone || "";
+      document.getElementById("email").value = d.contact?.email || "";
+      document.getElementById("applyLink").value = d.contact?.applyLink || "";
+      document.getElementById("mapEmbed").value = d.contact?.mapEmbed || "";
+
+      submitBtn.textContent = "Update College";
+    });
+
+    list.appendChild(div);
+  });
+}
+
+// Firestore Live Updates
+onSnapshot(collection(db,"collegeList"), snapshot=>{
+  snapshotData = snapshot.docs.map(doc => ({...doc.data(), id: doc.id}));
+  const states = [...new Set(snapshotData.map(c=>c.state).filter(Boolean))];
+  stateFilter.innerHTML = '<option value="All">All States</option>';
+  states.forEach(s=>{
+    const opt = document.createElement("option"); opt.value=s; opt.textContent=s;
+    stateFilter.appendChild(opt);
+  });
+  renderColleges(snapshotData);
+});
+
+// Filter Events
+typeFilter.addEventListener("change", ()=>renderColleges(snapshotData));
+stateFilter.addEventListener("change", ()=>renderColleges(snapshotData));
+</script>
+
+
+
+
+
+
+
+</body>
+</html>

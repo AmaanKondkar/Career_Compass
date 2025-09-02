@@ -1,0 +1,340 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  overflow-x: hidden;
+  background: #001f3f;
+  color: white;
+}
+
+/* ===== Animated Grid Background ===== */
+.grid-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  grid-template-rows: repeat(auto-fill, minmax(60px, 1fr));
+  z-index: 0;
+  pointer-events: none;
+}
+
+.tile {
+  animation: pulse 4s ease-in-out infinite;
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.15; }
+  50% { transform: scale(1.1); opacity: 0.35; }
+  100% { transform: scale(1); opacity: 0.15; }
+}
+
+.tile:nth-child(4n)   { animation-delay: 0.3s; }
+.tile:nth-child(5n)   { animation-delay: 0.6s; }
+.tile:nth-child(7n)   { animation-delay: 0.9s; }
+.tile:nth-child(10n)  { animation-delay: 1.2s; }
+.tile:nth-child(13n)  { animation-delay: 1.5s; }
+.tile:nth-child(17n)  { animation-delay: 1.8s; }
+.tile:nth-child(19n)  { animation-delay: 2.1s; }
+
+/* ===== Navbar Styling ===== */
+nav {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background: linear-gradient(90deg, #005bea, #00c6fb);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  z-index: 9999;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 22px;
+  color: white;
+
+  /* ✅ responsive fix */
+  flex-shrink: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.brand img {
+  height: 36px;
+  margin-right: 10px;
+}
+
+.nav-links,
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  padding: 6px 12px;
+  transition: all 0.6s ease;
+}
+
+.nav-links a:hover {
+  letter-spacing: 1px;
+  background-color: white;
+  color: #005bea;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.nav-buttons button {
+  padding: 8px 2px;
+  font-weight: 600;
+  border: 2px solid white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.login-btn {
+  background-color: transparent;
+  color: white;
+}
+
+.signup-btn {
+  background-color: white;
+  color: #005bea;
+}
+
+.login-btn:hover {
+  background-color: white;
+  color: #005bea;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.signup-btn:hover {
+  background-color: transparent;
+  color: white;
+  border: 2px solid white;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.hamburger {
+  display: none;
+  font-size: 26px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: white;
+  z-index: 101;
+  transition: transform 0.3s ease;
+  flex-shrink: 0; /* ✅ keeps visible */
+}
+
+.mobile-menu {
+  display: none;
+}
+
+/* ===== Responsive Menu ===== */
+@media (max-width: 768px) {
+  .nav-links,
+  .nav-buttons {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .mobile-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: linear-gradient(135deg, #005bea, #00c6fb);
+    width: 250px;
+    opacity: 0;
+    transform: scale(0) rotateY(80deg) skewX(-10deg);
+    transform-origin: top right;
+    transition: transform 0.7s ease, opacity 0.7s ease;
+    box-shadow: -8px 10px 20px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 25px 0;
+    z-index: 99;
+    border-radius: 0 0 0 30px;
+  }
+
+  .mobile-menu.show {
+    transform: scale(1) rotateY(0deg) skewX(0deg);
+    opacity: 1;
+  }
+
+  .mobile-menu a,
+  .mobile-menu button {
+    width: 80%;
+    text-align: center;
+    background: none;
+    border: none;
+    font-size: 16px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .mobile-menu a:hover,
+  .mobile-menu button:hover {
+    background: white;
+    color: #005bea;
+    letter-spacing: 1px;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .mobile-menu .signup-btn {
+    background: white;
+    color: #005bea;
+    border: 2px solid white;
+  }
+
+  .mobile-menu .login-btn {
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+  }
+
+  .mobile-menu .login-btn:hover {
+    background: white;
+    color: #005bea;
+    transform: scale(1.05);
+  }
+
+  .mobile-menu .signup-btn:hover {
+    background: transparent;
+    color: white;
+    transform: scale(1.05);
+  }
+}
+
+/* ===== Ultra Small Screens (Galaxy Z Fold, etc.) ===== */
+@media (max-width: 400px) {
+  nav {
+    padding: 10px 12px;
+  }
+  .brand {
+    font-size: 18px;
+  }
+  .brand img {
+    height: 28px;
+    margin-right: 6px;
+  }
+  .hamburger {
+    font-size: 22px;
+  }
+}
+
+/* ===== User Menu ===== */
+.hidden {
+  display: none !important;
+}
+
+.user-menu, .user-menu-mobile {
+  position: relative;
+  display: inline-block;
+}
+
+.user-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #fff;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-popup, .user-popup-mobile {
+  display: none;
+  position: absolute;
+  top: 45px;
+  right: 0;
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 10px;
+  min-width: 180px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+}
+
+.user-popup.show,
+.user-popup-mobile.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.user-popup p,
+.user-popup-mobile p {
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+#logoutBtn, #logoutBtnMobile {
+  padding: 8px 12px;
+  width: 100%;
+  border: none;
+  background: linear-gradient(to right, #ff416c, #ff4b2b);
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#logoutBtn:hover,
+#logoutBtnMobile:hover {
+  background: linear-gradient(to right, #ff4b2b, #ff416c);
+}
+
+
+
+
+
+
+
+
+/* Force navbar buttons to stay same everywhere */
+.navbar .nav-links .login-btn,
+.navbar .nav-links .signup-btn {
+  padding: 10px 18px !important;
+  font-size: 16px !important;
+  border-radius: 8px;
+  line-height: 1.4 !important;
+  height: auto !important; /* prevents squishing */
+  display: inline-block !important;
+}

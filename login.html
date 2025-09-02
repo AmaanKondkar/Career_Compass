@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login/Signup UI</title>
+  <style>
+    * {
+      margin: 0; padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    body, html {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    video#bgvideo {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -2;
+    }
+
+    .color-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #001f3fd6;
+      opacity: 0.7;
+      z-index: -1;
+    }
+
+    .container {
+      width: 400px;
+      margin: 50px auto;
+      background: rgba(255,255,255,0.1);
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 40px 35px rgba(0, 0, 0, 0.557);
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .form-box {
+      width: 200%;
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+
+    .form-container {
+      width: 50%;
+      padding: 40px;
+      z-index: 1;
+    }
+
+    h2 {
+      color: white;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0 4px;
+      border: none;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      transition: 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      background: rgba(255,255,255,0.3);
+      box-shadow: 0 0 10px #00c6fb;
+    }
+
+    input::placeholder {
+      color: #ddd;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      background: #00c6fb;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+      letter-spacing: 1px;
+    }
+
+    button:hover {
+      background: #008cba;
+      letter-spacing: 2px;
+      box-shadow: 0 0 10px #00c6fb;
+    }
+
+    .toggle-msg {
+      text-align: center;
+      color: white;
+      margin-top: 15px;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .message {
+      text-align: center;
+      margin: 10px 0;
+      font-size: 14px;
+      display: none;
+    }
+
+    .error {
+      color: #ff4d4d;
+    }
+
+    .success {
+      color: #00ffcc;
+    }
+
+    .error-msg {
+      color: #ff4d4d;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .slide-login {
+      transform: translateX(0%);
+    }
+
+    .slide-signup {
+      transform: translateX(-50%);
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        width: 90%;
+        margin: 20px auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<video autoplay muted loop id="bgvideo">
+  <source src="apply.mp4" type="video/mp4">
+</video>
+<div class="color-overlay"></div>
+
+<div class="container" id="auth-container">
+  <div class="form-box" id="form-box">
+
+    <!-- Login Form -->
+    <div class="form-container" id="login-box">
+      <h2>Login</h2>
+      <div class="message error" id="login-error">❌ Invalid credentials or account doesn't exist.</div>
+      <input type="text" id="login-username" placeholder="Username" />
+      <input type="email" id="login-email" placeholder="Email" />
+      <input type="password" id="login-password" placeholder="Password" />
+      <button id="loginBtn">Login</button>
+      <div class="toggle-msg" onclick="showSignup()">Don't have an account? Sign Up</div>
+    </div>
+
+    <!-- Signup Form -->
+    <div class="form-container" id="signup-box">
+      <h2>Sign Up</h2>
+      <div class="message success" id="signup-success">✅ Signup successful! Please login.</div>
+
+      <input type="text" id="signup-username" placeholder="Username" />
+      <div class="error-msg" id="signup-username-error"></div>
+
+      <input type="email" id="signup-email" placeholder="Email" />
+      <div class="error-msg" id="signup-email-error"></div>
+
+      <input type="password" id="signup-password" placeholder="Password" />
+      <div class="error-msg" id="signup-password-error"></div>
+
+      <button id="signupBtn">Create Account</button>
+      <div class="toggle-msg" onclick="showLogin()">Already have an account? Login</div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+<!-- Place this <script> at the END of your body tag -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+  import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    updateProfile
+  } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyD2fZbAKmL1Cti7NIDcadAh4WqVv5KzbPI",
+    authDomain: "career-guidance-e1462.firebaseapp.com",
+    projectId: "career-guidance-e1462",
+    storageBucket: "career-guidance-e1462.appspot.com",
+    messagingSenderId: "566009292247",
+    appId: "1:566009292247:web:67720ba8c8030ef7f95792",
+    measurementId: "G-4TWBG640XT"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  const formBox = document.getElementById('form-box');
+  const loginBtn = document.getElementById('loginBtn');
+  const signupBtn = document.getElementById('signupBtn');
+  const loginError = document.getElementById('login-error');
+  const signupSuccess = document.getElementById('signup-success');
+
+  function showSignup() {
+    formBox.classList.remove('slide-login');
+    formBox.classList.add('slide-signup');
+    loginError.style.display = 'none';
+    signupSuccess.style.display = 'none';
+  }
+
+  function showLogin() {
+    formBox.classList.remove('slide-signup');
+    formBox.classList.add('slide-login');
+    loginError.style.display = 'none';
+    signupSuccess.style.display = 'none';
+  }
+
+  function validateEmail(email) {
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return pattern.test(email);
+  }
+
+  function handleSignupValidation() {
+    const username = document.getElementById('signup-username').value.trim();
+    const email = document.getElementById('signup-email').value.trim();
+    const password = document.getElementById('signup-password').value.trim();
+
+    const usernameError = document.getElementById('signup-username-error');
+    const emailError = document.getElementById('signup-email-error');
+    const passwordError = document.getElementById('signup-password-error');
+
+    let valid = true;
+
+    // Reset errors
+    usernameError.textContent = '';
+    emailError.textContent = '';
+    passwordError.textContent = '';
+
+    if (!username) {
+      usernameError.textContent = 'Username is required.';
+      valid = false;
+    }
+
+    if (!validateEmail(email)) {
+      emailError.textContent = 'Please enter a valid email address.';
+      valid = false;
+    }
+
+    if (password.length < 6) {
+      passwordError.textContent = 'Password must be at least 6 characters.';
+      valid = false;
+    }
+
+    return valid;
+  }
+
+  signupBtn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (!handleSignupValidation()) return;
+
+    const username = document.getElementById('signup-username').value.trim();
+    const email = document.getElementById('signup-email').value.trim();
+    const password = document.getElementById('signup-password').value.trim();
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+      // ✅ Set the user's display name in Firebase
+      await updateProfile(userCredential.user, {
+        displayName: username
+      });
+
+      signupSuccess.style.display = 'block';
+      setTimeout(() => {
+        showLogin();
+      }, 1200);
+    } catch (error) {
+      alert("Signup Failed: " + error.message);
+    }
+  });
+
+  loginBtn.addEventListener('click', async () => {
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value.trim();
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      loginError.style.display = 'none';
+      alert("Login successful!");
+      window.location.href = 'index.html';
+    } catch (error) {
+      loginError.style.display = 'block';
+    }
+  });
+
+  formBox.classList.add('slide-login');
+  window.showSignup = showSignup;
+  window.showLogin = showLogin;
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

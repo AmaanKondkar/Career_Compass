@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CareerCompass</title>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="nav.css">
+  <link rel="stylesheet" href="footer.css">
+  <link rel="stylesheet" href="guide.css">
+</head>
+
+<body>
+
+<!-- ✅ Navbar -->
+<nav role="navigation" aria-label="Main navigation">
+  <div class="brand">
+    <img src="logo.png" alt="CareerCompass Logo" />
+    <span>CareerCompass</span>
+  </div>
+
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="search_college.html">College Search</a>
+    <a href="guide.html">Career Guide</a>
+    <a href="aptitude.html">Aptitude</a>
+    <a href="Dashboard.html">Dashboard</a>
+  </div>
+
+  <!-- Auth Buttons -->
+  <div class="nav-buttons" id="auth-buttons">
+    <button class="login-btn" onclick="window.location.href='login.html'">Login</button>
+    <button class="signup-btn" onclick="window.location.href='login.html'">Sign Up</button>
+  </div>
+
+  <!-- User Menu -->
+  <div class="user-menu" id="user-menu" style="display:none;">
+    <img src="user-icon.png" class="user-icon" id="userIcon" alt="User Icon" />
+    <div class="user-popup" id="userPopup">
+      <p><strong id="userName">Username</strong></p>
+      <p id="userEmail">email@example.com</p>
+      <button id="logoutBtn">Logout</button>
+    </div>
+  </div>
+
+  <!-- Mobile Hamburger -->
+  <button class="hamburger" onclick="toggleMobileMenu()" id="hamburgerBtn" aria-label="Toggle navigation">☰</button>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="search_college.html">College Search</a>
+    <a href="guide.html">Career Guide</a>
+    <a href="aptitude.html">Aptitude</a>
+    <a href="Dashboard.html">Dashboard</a>
+
+    <div class="nav-buttons" id="auth-buttons-mobile">
+      <button onclick="window.location.href='login.html'">Login</button>
+      <button onclick="window.location.href='login.html'">Sign Up</button>
+    </div>
+
+    <div class="user-menu" id="user-menu-mobile" style="display:none;">
+      <img src="user-icon.png" class="user-icon" id="userIconMobile" alt="User Icon Mobile" />
+      <div class="user-popup" id="userPopupMobile">
+        <p><strong id="userNameMobile">Username</strong></p>
+        <p id="userEmailMobile">email@example.com</p>
+        <button id="logoutBtnMobile">Logout</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+
+
+<div class="app">
+    <div class="card" id="card">
+      <div class="header">
+        <div class="brand">
+          <div class="logo">🔬</div>
+          <div>
+            <h1>Career Interest Test (Weighted)</h1>
+            <div class="muted">31 casual questions • weighted scoring</div>
+          </div>
+        </div>
+        <div class="muted" id="stepLabel">Q 1 / 30</div>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress"><div class="bar" id="bar"></div></div>
+      </div>
+
+      <div class="content" id="content"></div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ✅ Background Grid -->
+<div class="grid-background" aria-hidden="true">
+  <script>
+    for (let i = 0; i < 300; i++) {
+      document.write('<div class="tile"></div>');
+    }
+  </script>
+</div>
+
+<!-- ✅ Footer -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-col footer-logo">
+      <img src="logo.png" alt="CareerCompass Logo" />
+      <p><i class="fas fa-map-marker-alt"></i> 123 Future Street, Maharashtra, India</p>
+      <p><i class="fas fa-envelope"></i> contact@careercompass.in</p>
+      <p><i class="fas fa-phone"></i> +91-9876543210</p>
+    </div>
+
+    <div class="footer-col">
+      <h3>Explore</h3>
+      <ul>
+        <li><i class="fas fa-compass"></i><a href="#">Aptitude Test</a></li>
+        <li><i class="fas fa-university"></i><a href="#">College Reviews</a></li>
+        <li><i class="fas fa-briefcase"></i><a href="#">Job Updates</a></li>
+        <li><i class="fas fa-book"></i><a href="#">Courses</a></li>
+        <li><i class="fas fa-envelope-open-text"></i><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h3>Services</h3>
+      <ul>
+        <li><i class="fas fa-chart-line"></i><a href="#">Career Planning</a></li>
+        <li><i class="fas fa-lightbulb"></i><a href="#">Skill Assessment</a></li>
+        <li><i class="fas fa-users"></i><a href="#">Mentor Support</a></li>
+        <li><i class="fas fa-laptop-code"></i><a href="#">Tech Training</a></li>
+        <li><i class="fas fa-globe"></i><a href="#">Global Resources</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h3>Follow Us</h3>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 CareerCompass. All rights reserved.</p>
+    <div class="footer-quote">
+      “CareerCompass isn’t just a tool — it’s your partner in building a future that fits.”
+    </div>
+  </div>
+</footer>
+
+<script src="nav.js"></script>
+<script src="guide.js"></script>
+<!-- ✅ JavaScript -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyD2fZbAKmL1Cti7NIDcadAh4WqVv5KzbPI",
+    authDomain: "career-guidance-e1462.firebaseapp.com",
+    projectId: "career-guidance-e1462",
+    storageBucket: "career-guidance-e1462.appspot.com",
+    messagingSenderId: "566009292247",
+    appId: "1:566009292247:web:67720ba8c8030ef7f95792",
+    measurementId: "G-4TWBG640XT"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // Navbar & User Menu Elements
+  const authButtons = document.getElementById('auth-buttons');
+  const userMenu = document.getElementById('user-menu');
+  const userNameNav = document.getElementById('userName');
+  const userEmailNav = document.getElementById('userEmail');
+
+  const authButtonsMobile = document.getElementById('auth-buttons-mobile');
+  const userMenuMobile = document.getElementById('user-menu-mobile');
+  const userNameMobile = document.getElementById('userNameMobile');
+  const userEmailMobile = document.getElementById('userEmailMobile');
+
+  const logoutBtn = document.getElementById('logoutBtn');
+  const logoutBtnMobile = document.getElementById('logoutBtnMobile');
+
+  // Show/hide menus based on auth state
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      authButtons.style.display = 'none';
+      userMenu.style.display = 'flex';
+      userNameNav.textContent = user.displayName || "User";
+      userEmailNav.textContent = user.email;
+
+      authButtonsMobile.style.display = 'none';
+      userMenuMobile.style.display = 'flex';
+      userNameMobile.textContent = user.displayName || "User";
+      userEmailMobile.textContent = user.email;
+    } else {
+      authButtons.style.display = 'flex';
+      userMenu.style.display = 'none';
+
+      authButtonsMobile.style.display = 'flex';
+      userMenuMobile.style.display = 'none';
+    }
+  });
+
+  // Logout
+  logoutBtn.addEventListener('click', () => signOut(auth).then(() => location.reload()));
+  logoutBtnMobile.addEventListener('click', () => signOut(auth).then(() => location.reload()));
+</script>
+
+</body>
+</html>

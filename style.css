@@ -1,0 +1,53 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  height: 100vh;
+}
+.sidebar {
+  width: 280px;
+  background-color: #003973;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar img {
+  width: 100px;
+  margin: 0 auto 10px;
+}
+.sidebar h4 {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 30px;
+  font-size: 16px;
+}
+.logout-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  font-size: 14px;
+  align-self: flex-start;
+  margin-bottom: 20px;
+}
+.radio-group {
+  margin-bottom: 20px;
+}
+.radio-group label {
+  margin-right: 10px;
+  font-size: 14px;
+}
+.state-select {
+  display: none;
+  margin-bottom: 20px;
+}
+.submit-btn {
+  display: none;
+}
+.main {
+  flex: 1;
+  background-color: #f7f7f7;
+  padding: 30px;
+}

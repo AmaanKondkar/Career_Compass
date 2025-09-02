@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CareerCompass</title>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+<!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <!-- ✅ Choices.js CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+  <!-- Custom CSS -->
+   
+
+  
+  <link rel="stylesheet" href="nav.css">
+  <link rel="stylesheet" href="aaaa.css">
+  <link rel="stylesheet" href="footer.css">
+    
+  
+  
+</head>
+
+<body>
+
+    <!-- 🌟 Background Grid Animation -->
+<div class="grid-background">
+  <script>
+    for (let i = 0; i < 300; i++) {
+      document.write('<div class="tile"></div>');
+    }
+  </script>
+</div>
+
+<!-- ✅ Navbar -->
+<nav role="navigation" aria-label="Main navigation">
+  <div class="brand">
+    <img src="logo.png" alt="CareerCompass Logo" />
+    <span>CareerCompass</span>
+  </div>
+
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="search_college.html">College Search</a>
+    <a href="guide.html">Career Guide</a>
+    <a href="apppitude.html">Aptitude</a>
+    <a href="finalfullydonee.html">Dashboard</a>
+  </div>
+
+  <!-- Auth Buttons -->
+  <div class="nav-buttons" id="auth-buttons">
+    <button class="login-btn" onclick="window.location.href='login.html'">Login</button>
+    <button class="signup-btn" onclick="window.location.href='login.html'">Sign Up</button>
+  </div>
+
+  <!-- User Menu -->
+  <div class="user-menu" id="user-menu" style="display:none;">
+    <img src="user-icon.png" class="user-icon" id="userIcon" alt="User Icon" />
+    <div class="user-popup" id="userPopup">
+      <p><strong id="userName">Username</strong></p>
+      <p id="userEmail">email@example.com</p>
+      <button id="logoutBtn">Logout</button>
+    </div>
+  </div>
+
+  <!-- Mobile Hamburger -->
+  <button class="hamburger" onclick="toggleMobileMenu()" id="hamburgerBtn" aria-label="Toggle navigation">☰</button>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="search_college.html">College Search</a>
+    <a href="guide.html">Career Guide</a>
+    <a href="apppitude.html">Aptitude</a>
+    <a href="finalfullydonee.html">Dashboard</a>
+
+    <div class="nav-buttons" id="auth-buttons-mobile">
+      <button onclick="window.location.href='login.html'">Login</button>
+      <button onclick="window.location.href='login.html'">Sign Up</button>
+    </div>
+
+    <div class="user-menu" id="user-menu-mobile" style="display:none;">
+      <img src="user-icon.png" class="user-icon" id="userIconMobile" alt="User Icon Mobile" />
+      <div class="user-popup" id="userPopupMobile">
+        <p><strong id="userNameMobile">Username</strong></p>
+        <p id="userEmailMobile">email@example.com</p>
+        <button id="logoutBtnMobile">Logout</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+
+ <div class="container-fluid mt-3">
+
+    <!-- User info 
+    <div id="userEmailDisplay" class="text-end"></div>-->
+
+    <!-- Mobile Filter Toggle Button -->
+    <div class="d-md-none mb-3">
+      <button id="filterToggleBtn" class="btn btn-primary btn-lg shadow">
+        <i class="fas fa-sliders-h me-2"></i> Filters
+      </button>
+    </div>
+
+    <div class="row">
+      <!-- Left Sidebar Filters (Desktop only) -->
+      <div class="col-md-3 mb-3 desktop-filter">
+        <div class="card filter-card shadow-sm position-sticky" style="top:20px;">
+          <h5><i class="fas fa-sliders-h me-2"></i> Filters</h5>
+          <hr>
+          <div class="mb-3 form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="aptitudeToggle">
+            <label class="form-check-label" for="aptitudeToggle"><i class="fas fa-brain me-2"></i>Aptitude Score</label>
+          </div>
+          <div class="mb-3">
+            <label for="courseFilter" class="form-label"><i class="fas fa-book me-2"></i>Course Name</label>
+            <select class="form-select" id="courseFilter">
+              <option value="">All Courses</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="eligibilityFilter" class="form-label"><i class="fas fa-file-alt me-2"></i>Exams Accepted</label>
+            <select class="form-select" id="eligibilityFilter">
+              <option value="">All</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="feesFilter" class="form-label"><i class="fas fa-indian-rupee-sign me-2"></i>Fees (Max)</label>
+            <input type="range" class="form-range" min="0" max="500000" step="1000" id="feesFilter">
+            <span id="feesValue">500000</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side College Listing -->
+      <div class="col-md-9">
+        <!-- Top Horizontal Filters -->
+        <div class="row mb-3 top-search">
+          <div class="col-md-5 mb-2">
+            <input type="text" id="nameSearch" class="form-control" placeholder="🔍 Search by College Name">
+          </div>
+          <div class="col-md-4 mb-2">
+            <select id="stateFilter" class="form-select">
+              <option value="">🌎 All States/City</option>
+            </select>
+          </div>
+          <div class="col-md-3 mb-2">
+            <select id="typeFilter" class="form-select">
+              <option value="">🏫 All Types</option>
+              <option value="Indian">🇮🇳 Indian</option>
+              <option value="Abroad">🌍 Abroad</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Top 3 Recommended Colleges (Horizontal Scroll) -->
+        <div class="row mb-3">
+          <div class="col-12">
+            <h5>Top 3 Recommended Colleges</h5>
+            <div id="recommendedColleges" class="top-colleges-container d-flex overflow-auto gap-3">
+              <!-- Top 3 colleges rendered here by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- College Listing -->
+        <div class="row" id="collegeCards">
+          <!-- Colleges rendered here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= Mobile Slide-in Filter Panel ================= -->
+  <div id="filterPanel" class="filter-panel">
+    <h5><i class="fas fa-sliders-h me-2"></i> Filters</h5>
+    <hr>
+    <div class="mb-3 form-check form-switch">
+      <input class="form-check-input" type="checkbox" id="aptitudeToggleMobile">
+      <label class="form-check-label" for="aptitudeToggleMobile">Aptitude Score</label>
+    </div>
+    <div class="mb-3">
+      <label for="courseFilterMobile" class="form-label">Course Name</label>
+      <select class="form-select" id="courseFilterMobile">
+        <option value="">All Courses</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="eligibilityFilterMobile" class="form-label">Exams Accepted</label>
+      <select class="form-select" id="eligibilityFilterMobile">
+        <option value="">All</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="feesFilterMobile" class="form-label">Fees (Max)</label>
+      <input type="range" class="form-range" min="0" max="500000" step="1000" id="feesFilterMobile">
+      <span id="feesValueMobile">500000</span>
+    </div>
+  </div>
+
+  <!-- Overlay -->
+  <div id="filterOverlay" class="filter-overlay"></div>
+  <!-- ================================================================ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ✅ Footer -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-col footer-logo">
+      <img src="logo.png" alt="CareerCompass Logo" />
+      <p><i class="fas fa-map-marker-alt"></i> 123 Future Street, New Delhi, India</p>
+      <p><i class="fas fa-envelope"></i> contact@careercompass.in</p>
+      <p><i class="fas fa-phone"></i> +91-9876543210</p>
+    </div>
+
+    <div class="footer-col">
+      <h3>Explore</h3>
+      <ul>
+        <li><i class="fas fa-compass"></i><a href="#">Aptitude Test</a></li>
+        <li><i class="fas fa-university"></i><a href="#">College Reviews</a></li>
+        <li><i class="fas fa-briefcase"></i><a href="#">Job Updates</a></li>
+        <li><i class="fas fa-book"></i><a href="#">Courses</a></li>
+        <li><i class="fas fa-envelope-open-text"></i><a href="#">Contact Us</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h3>Services</h3>
+      <ul>
+        <li><i class="fas fa-chart-line"></i><a href="#">Career Planning</a></li>
+        <li><i class="fas fa-lightbulb"></i><a href="#">Skill Assessment</a></li>
+        <li><i class="fas fa-users"></i><a href="#">Mentor Support</a></li>
+        <li><i class="fas fa-laptop-code"></i><a href="#">Tech Training</a></li>
+        <li><i class="fas fa-globe"></i><a href="#">Global Resources</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h3>Follow Us</h3>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 CareerCompass. All rights reserved.</p>
+    <div class="footer-quote">
+      “CareerCompass isn’t just a tool — it’s your partner in building a future that fits.”
+    </div>
+  </div>
+</footer>
+
+
+
+
+
+
+<!-- ✅ Choices.js Script -->
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+  <!-- Fuse.js + Firebase -->
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="nav.js"></script>
+
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import { getFirestore, collection, onSnapshot, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import Fuse from "https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.esm.js";
+
+// =================== Firebase Config ===================
+const firebaseConfig = {
+  apiKey: "AIzaSyD2fZbAKmL1Cti7NIDcadAh4WqVv5KzbPI",
+  authDomain: "career-guidance-e1462.firebaseapp.com",
+  projectId: "career-guidance-e1462",
+  storageBucket: "career-guidance-e1462.appspot.com",
+  messagingSenderId: "566009292247",
+  appId: "1:566009292247:web:67720ba8c8030ef7f95792",
+  measurementId: "G-4TWBG640XT"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+// =================== DOM Elements ===================
+const collegeCardsContainer = document.getElementById("collegeCards");
+const recommendedContainer = document.getElementById("recommendedColleges");
+const nameSearch = document.getElementById("nameSearch");
+const typeFilter = document.getElementById("typeFilter");
+const stateFilter = document.getElementById("stateFilter");
+const courseFilter = document.getElementById("courseFilter");
+const examsFilter = document.getElementById("eligibilityFilter");
+const feesFilter = document.getElementById("feesFilter");
+const feesValue = document.getElementById("feesValue");
+const aptitudeToggle = document.getElementById("aptitudeToggle");
+const userEmailDisplay = document.getElementById("userEmail");
+
+// Mobile filters
+const filterToggleBtn = document.getElementById("filterToggleBtn");
+const filterPanel = document.getElementById("filterPanel");
+const filterOverlay = document.getElementById("filterOverlay");
+const aptitudeToggleMobile = document.getElementById("aptitudeToggleMobile");
+const courseFilterMobile = document.getElementById("courseFilterMobile");
+const examsFilterMobile = document.getElementById("eligibilityFilterMobile");
+const feesFilterMobile = document.getElementById("feesFilterMobile");
+const feesValueMobile = document.getElementById("feesValueMobile");
+
+// Navbar/User Elements
+const authButtons = document.getElementById('auth-buttons');
+const userMenu = document.getElementById('user-menu');
+const userNameNav = document.getElementById('userName');
+const userEmailNav = document.getElementById('userEmail');
+const authButtonsMobile = document.getElementById('auth-buttons-mobile');
+const userMenuMobile = document.getElementById('user-menu-mobile');
+const userNameMobile = document.getElementById('userNameMobile');
+const userEmailMobile = document.getElementById('userEmailMobile');
+const logoutBtn = document.getElementById('logoutBtn');
+const logoutBtnMobile = document.getElementById('logoutBtnMobile');
+
+// =================== Globals ===================
+let userAptitudeScore = null;
+let aptitudeFetched = false; // prevent double fetch
+let collegesData = [];
+let fuse;
+let choicesState;
+
+// ==================== Choices.js ====================
+if (stateFilter) {
+  choicesState = new Choices(stateFilter, { searchEnabled: true, itemSelectText: '' });
+}
+
+// ==================== Render Colleges ====================
+function renderColleges(data, container) {
+  container.innerHTML = '';
+  if (!data.length) {
+    container.innerHTML = '<p class="text-muted">No colleges found.</p>';
+    return;
+  }
+
+  data.forEach(d => {
+    const badgeClass = d.type === "Indian" ? "badge-indian" : "badge-abroad";
+    const card = document.createElement("div");
+    card.className = "college-card mb-3 p-3 shadow-sm";
+    card.dataset.id = d.id;
+    card.innerHTML = `
+      <div class="college-top-row d-flex align-items-center mb-3">
+        <img src="${d.logoUrl || 'https://via.placeholder.com/100'}" alt="${d.collegeName || '-'} Logo" class="college-logo">
+        <div class="ms-3 flex-grow-1">
+          <div class="college-title">🎓 ${d.collegeName || '-'}</div>
+          <div class="college-type badge-type ${badgeClass}">🏷️ ${d.type || '-'}</div>
+        </div>
+      </div>
+      <div class="college-info-box mb-2 d-flex justify-content-between flex-wrap gap-2">
+        <div class="college-state">🌎 <strong>State/City:</strong> ${d.state || '-'}</div>
+        <div class="college-year">📅 <strong>Established:</strong> ${d.establishedYear || '-'}</div>
+      </div>
+      <p class="college-description">📖 ${d.description || 'No description available.'}</p>
+      <div class="college-stats-box mb-2 d-flex flex-wrap gap-3">
+        <div class="college-placement">💼 <strong>Placement:</strong> ${d.statsAcc?.placementPercentage ?? '-'}%</div>
+        <div class="college-exams">📝 <strong>Exams Accepted:</strong> ${d.statsAcc?.cutOffScores ?? '-'}</div>
+      </div>
+      <div class="college-contact-box mb-2 d-flex flex-wrap gap-3">
+        <div class="college-phone">📞 ${d.contact?.phone || '-'}</div>
+        <div class="college-email">✉️ ${d.contact?.email || '-'}</div>
+      </div>
+      <div class="text-end">
+        <a href="view.html?id=${d.id}" target="_blank" class="btn btn-detail btn-lg mt-2">🔗 More Detail</a>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// ==================== Filter Helpers ====================
+function updateStateChoicesOptions(defaultOptionText, optionsArray) {
+  const choicesData = [{ value: "", label: defaultOptionText, selected: true }];
+  optionsArray.forEach(opt => choicesData.push({ value: opt, label: opt }));
+  if (choicesState) {
+    choicesState.clearStore();
+    choicesState.setChoices(choicesData, "value", "label", true);
+  }
+}
+
+function copySelectOptions(src, dst) {
+  if (!src || !dst) return;
+  const curr = dst.value;
+  dst.innerHTML = src.innerHTML;
+  if ([...dst.options].some(o => o.value === curr)) dst.value = curr;
+}
+
+function syncDesktopToMobile() {
+  courseFilterMobile.value = courseFilter.value || "";
+  examsFilterMobile.value = examsFilter.value || "";
+  feesFilterMobile.value = feesFilter.value || 500000;
+  feesValueMobile.textContent = feesFilterMobile.value;
+  aptitudeToggleMobile.checked = aptitudeToggle.checked;
+}
+
+function syncMobileToDesktop() {
+  courseFilter.value = courseFilterMobile.value || "";
+  examsFilter.value = examsFilterMobile.value || "";
+  feesFilter.value = feesFilterMobile.value || 500000;
+  feesValue.textContent = feesFilter.value;
+  aptitudeToggle.checked = aptitudeToggleMobile.checked;
+  filterAndSearch();
+}
+
+// =================== Firestore College Listener ===================
+onSnapshot(collection(db, "collegeList"), snapshot => {
+  collegesData = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+
+  const types = [...new Set(collegesData.map(c => c.type).filter(Boolean))];
+  typeFilter.innerHTML = `<option value="">All Types</option>` + types.map(t => `<option value="${t}">${t}</option>`).join("");
+
+  const courses = [...new Set(collegesData.flatMap(c => (c.courses || []).map(cc => cc.name)).filter(Boolean))];
+  courseFilter.innerHTML = `<option value="">All Courses</option>` + courses.map(t => `<option value="${t}">${t}</option>`).join("");
+
+  const exams = [...new Set(collegesData.flatMap(c => (c.courses || []).map(cc => cc.exams)).filter(Boolean))];
+  examsFilter.innerHTML = `<option value="">All</option>` + exams.map(t => `<option value="${t}">${t}</option>`).join("");
+
+  const states = [...new Set(collegesData.map(c => c.state).filter(Boolean))];
+  updateStateChoicesOptions("All States", states);
+
+  copySelectOptions(courseFilter, courseFilterMobile);
+  copySelectOptions(examsFilter, examsFilterMobile);
+
+  fuse = new Fuse(collegesData, { keys: ["collegeName","state","type","courses.name"], threshold:0.3 });
+
+  feesValue.textContent = feesFilter.value || 500000;
+  feesValueMobile.textContent = feesFilterMobile.value || 500000;
+
+  filterAndSearch();
+});
+
+// =================== Filter & Search ===================
+function filterAndSearch() {
+  let filtered = [...collegesData];
+  const typeVal = typeFilter.value;
+  const stateVal = stateFilter.value;
+  const courseVal = courseFilter.value;
+  const examsVal = examsFilter.value;
+  const feesVal = parseInt(feesFilter.value, 10);
+  const searchVal = nameSearch.value.trim();
+  const aptitudeActive = aptitudeToggle.checked;
+
+  if (typeVal) filtered = filtered.filter(c => c.type === typeVal);
+  if (stateVal) filtered = filtered.filter(c => c.state === stateVal);
+  if (courseVal) filtered = filtered.filter(c => (c.courses || []).some(cc => cc.name === courseVal));
+  if (examsVal) filtered = filtered.filter(c => (c.courses || []).some(cc => cc.exams === examsVal));
+  if (!isNaN(feesVal)) filtered = filtered.filter(c => (c.courses || []).some(cc => !cc.fees || parseInt(cc.fees,10) <= feesVal));
+
+  if (searchVal && fuse) {
+    const results = fuse.search(searchVal).map(r=>r.item.id);
+    filtered = filtered.filter(c=>results.includes(c.id));
+  }
+
+  if (userAptitudeScore !== null && aptitudeActive) {
+    const target = (userAptitudeScore*100)/60;
+    filtered.sort((a,b)=>
+      Math.abs((a.statsAcc?.placementPercentage||0)-target) -
+      Math.abs((b.statsAcc?.placementPercentage||0)-target)
+    );
+  }
+
+  renderColleges(filtered, collegeCardsContainer);
+
+  if (recommendedContainer) {
+    if (userAptitudeScore !== null && aptitudeActive) {
+      const topRecommendations = filtered.slice(0,3);
+      if(topRecommendations.length) renderColleges(topRecommendations, recommendedContainer);
+      else recommendedContainer.innerHTML='<p class="text-muted">No suitable recommendations found based on your aptitude score and selected filters.</p>';
+    } else {
+      recommendedContainer.innerHTML='<p class="text-muted">Based on your aptitude score</p>';
+    }
+  }
+}
+
+// =================== Event Listeners ===================
+[nameSearch].forEach(el=>el?.addEventListener("input", filterAndSearch));
+[typeFilter,stateFilter,courseFilter,examsFilter].forEach(el=>el?.addEventListener("change", filterAndSearch));
+
+feesFilter.addEventListener("input", ()=>{
+  feesValue.textContent = feesFilter.value;
+  feesFilterMobile.value = feesFilter.value;
+  feesValueMobile.textContent = feesFilter.value;
+  filterAndSearch();
+});
+
+feesFilterMobile.addEventListener("input", ()=>{
+  feesValueMobile.textContent = feesFilterMobile.value;
+  feesFilter.value = feesFilterMobile.value;
+  feesValue.textContent = feesFilterMobile.value;
+  filterAndSearch();
+});
+
+// Aptitude toggle with login warning
+aptitudeToggle.addEventListener("change", ()=>{
+  if(aptitudeToggle.checked && !auth.currentUser){
+    if(!document.getElementById("aptitudeWarning")){
+      const div=document.createElement("div");
+      div.id="aptitudeWarning";
+      div.className="alert alert-warning alert-dismissible fade show mt-2";
+      div.role="alert";
+      div.innerHTML=`⚠️ Please login to use aptitude-based college filtering.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
+      document.querySelector(".container-fluid").prepend(div);
+    }
+    aptitudeToggle.checked=false;
+    aptitudeToggleMobile.checked=false;
+    return;
+  }
+  aptitudeToggleMobile.checked = aptitudeToggle.checked;
+  filterAndSearch();
+});
+
+aptitudeToggleMobile.addEventListener("change", ()=>{
+  aptitudeToggle.checked = aptitudeToggleMobile.checked;
+  aptitudeToggle.dispatchEvent(new Event("change"));
+});
+
+// Mobile filter panel
+filterToggleBtn.addEventListener("click", ()=>{
+  syncDesktopToMobile();
+  filterPanel.classList.add("show");
+  filterOverlay.classList.add("active");
+});
+filterOverlay.addEventListener("click", ()=>{
+  filterPanel.classList.remove("show");
+  filterOverlay.classList.remove("active");
+});
+document.addEventListener("keydown", e=>{
+  if(e.key==="Escape"){
+    filterPanel.classList.remove("show");
+    filterOverlay.classList.remove("active");
+  }
+});
+courseFilterMobile.addEventListener("input", syncMobileToDesktop);
+examsFilterMobile.addEventListener("input", syncMobileToDesktop);
+feesFilterMobile.addEventListener("change", syncMobileToDesktop);
+
+// =================== Auth State (Merged) ===================
+onAuthStateChanged(auth, async user=>{
+  if(user){
+    // Navbar
+    authButtons.style.display='none';
+    userMenu.style.display='flex';
+    userNameNav.textContent = user.displayName||"User";
+    userEmailNav.textContent = user.email||'';
+
+    authButtonsMobile.style.display='none';
+    userMenuMobile.style.display='flex';
+    userNameMobile.textContent = user.displayName||"User";
+    userEmailMobile.textContent = user.email||'';
+
+    // Aptitude fetch only once
+    if(!aptitudeFetched){
+      try{
+        const q = query(collection(db,"aptitudeResults"),where("userId","==",user.uid));
+        const snapshot = await getDocs(q);
+        userAptitudeScore = !snapshot.empty ? snapshot.docs[0].data().total || 0 : null;
+        aptitudeFetched=true;
+      }catch(err){
+        console.error("Aptitude fetch error:",err);
+        userAptitudeScore=null;
+      }
+    }
+
+    filterAndSearch();
+  } else {
+    // Navbar
+    authButtons.style.display='flex';
+    userMenu.style.display='none';
+    authButtonsMobile.style.display='flex';
+    userMenuMobile.style.display='none';
+
+    // Aptitude reset
+    userAptitudeScore=null;
+    aptitudeFetched=false;
+
+    filterAndSearch();
+  }
+});
+
+// Logout
+logoutBtn.addEventListener('click',()=>signOut(auth).then(()=>location.reload()));
+logoutBtnMobile.addEventListener('click',()=>signOut(auth).then(()=>location.reload()));
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

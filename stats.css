@@ -1,0 +1,75 @@
+.page-wrapper {
+      font-family: 'Segoe UI', sans-serif;
+      
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .stats-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    .stat-box {
+      background: #fff;
+      border-radius: 16px;
+      padding: 30px 20px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.569),
+        0 8px 20px rgba(0, 0, 0, 0.555),
+        0 16px 40px rgba(0, 0, 0, 0.517);
+    }
+
+    .stat-box:hover {
+      transform: translateY(-6px);
+    }
+
+    .icon {
+      font-size: 44px;
+      margin-bottom: 15px;
+    }
+
+    .number {
+      font-size: 36px;
+      font-weight: bold;
+      color: #0077ff;
+    }
+
+    .label {
+      font-size: 18px;
+      color: #333;
+      margin-top: 5px;
+      font-weight: 700;
+    }
+
+    @media (max-width: 768px) {
+      .page-wrapper {
+        padding: 30px 15px;
+      }
+      .number {
+        font-size: 30px;
+      }
+      .label {
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .icon {
+        font-size: 36px;
+      }
+      .number {
+        font-size: 26px;
+      }
+      .label {
+        font-size: 15px;
+      }
+    }
